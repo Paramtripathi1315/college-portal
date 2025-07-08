@@ -13,57 +13,87 @@
   text-shadow: 1px 1px #e0e0e0;
 }
 
-.notices ul {
-  list-style: none;
-  padding: 0;
-  max-width: 800px;
+/* Notice Grid */
+.notice-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.notices li {
+.notice-card {
   background: #ffffff;
-  padding: 1.5rem 1.2rem;
+  padding: 1.5rem;
   border-radius: 10px;
-  margin-bottom: 1rem;
   box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  text-decoration: none;
+  color: #222;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  position: relative;
 }
 
-.notices li:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 24px rgba(0,0,0,0.12);
+.notice-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
 }
 
-.notices li::before {
-  content: "📢";
-  position: absolute;
-  left: -2.2rem;
-  font-size: 1.5rem;
+.notice-card h3 {
+  font-size: 1.2rem;
   color: #0066cc;
-  top: 1.3rem;
+  margin-bottom: 0.5rem;
+}
+
+.notice-card p {
+  font-size: 0.95rem;
+  color: #444;
+  margin-top: 0.3rem;
+}
+
+/* Detail Page */
+.notice-detail-card {
+  background: #fff;
+  padding: 2rem;
+  margin: 2rem auto;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.notice-detail-card h2 {
+  font-size: 1.8rem;
+  color: #003366;
+}
+
+.notice-detail-card p {
+  font-size: 1rem;
+  color: #333;
+  margin-top: 0.8rem;
+}
+
+.back-link {
+  display: inline-block;
+  margin-top: 1.5rem;
+  text-decoration: none;
+  color: #0066cc;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  text-decoration: underline;
 }
 
 /* Responsive */
-@media screen and (max-width: 768px) {
-  .notices h1 {
-    font-size: 2rem;
-  }
-
-  .notices li {
-    font-size: 0.95rem;
-    padding: 1.2rem;
-  }
-}
-
 @media screen and (max-width: 480px) {
-  .notices li {
-    padding: 1rem;
-    font-size: 0.9rem;
+  .notice-card h3 {
+    font-size: 1rem;
   }
 
-  .notices li::before {
-    left: -1.8rem;
-    top: 1rem;
+  .notice-card p {
+    font-size: 0.85rem;
+  }
+
+  .notice-detail-card {
+    padding: 1.5rem;
   }
 }

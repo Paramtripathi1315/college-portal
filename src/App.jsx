@@ -14,6 +14,7 @@ import Syllabus from './pages/Syllabus';
 import CourseDetails from './pages/CourseDetails';
 import Notices from './pages/Notices';
 import Admission from './pages/Admission';
+import NoticeDetails from './pages/NoticeDetails';
 import './App.css'; 
 
 function App() { 
@@ -33,6 +34,8 @@ function App() {
         <Route path="/course/:id" element={<CourseDetails />} />
         <Route path="/notices" element={<Notices />} />
         <Route path="/admission" element={<Admission />} />
+        <Route path="/notices/:id" element={<NoticeDetails />} />
+
       </Routes>
       <Footer />
     </Router>

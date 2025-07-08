@@ -121,3 +121,15 @@
     max-width: 100%;
   }
 }
+
+.success-msg {
+  text-align: center;
+  color: green;
+  font-weight: 600;
+}
+
+.error-msg {
+  text-align: center;
+  color: red;
+  font-weight: 600;
+}

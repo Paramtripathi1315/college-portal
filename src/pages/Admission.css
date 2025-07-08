@@ -1,37 +1,38 @@
 .admission {
   padding: 3rem 1rem;
-  background: linear-gradient(to right, #f5f7fa, #c3cfe2);
+  background: linear-gradient(to right, #eef2f7, #d6e4f0);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  font-family: 'Segoe UI', sans-serif;
 }
 
 .admission h1 {
-  font-size: 2.5rem;
+  font-size: 2.8rem;
   margin-bottom: 2rem;
   color: #003366;
-  font-weight: bold;
-  text-shadow: 1px 1px #ddd;
+  font-weight: 700;
+  text-shadow: 1px 1px #bbb;
 }
 
 .admission-form {
   background-color: #ffffff;
-  padding: 2rem 2.5rem;
-  border-radius: 12px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  max-width: 650px;
+  padding: 2.5rem;
+  border-radius: 14px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  max-width: 750px;
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  animation: slideFade 0.5s ease-out;
+  animation: fadeInUp 0.5s ease-in;
 }
 
-@keyframes slideFade {
+@keyframes fadeInUp {
   0% {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(30px);
   }
   100% {
     opacity: 1;
@@ -41,28 +42,28 @@
 
 .admission-form label {
   font-weight: 600;
-  margin-bottom: 0.3rem;
   color: #003366;
+  margin-bottom: 0.4rem;
 }
 
 .admission-form input,
 .admission-form select,
 .admission-form textarea {
-  padding: 0.9rem 1rem;
-  border: 1.8px solid #ccc;
-  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  border: 2px solid #cbd6e2;
+  border-radius: 10px;
   font-size: 1rem;
-  transition: border-color 0.3s, box-shadow 0.3s;
-  background-color: #f9f9f9;
+  background-color: #f9fcff;
+  transition: all 0.3s ease;
 }
 
 .admission-form input:focus,
 .admission-form select:focus,
 .admission-form textarea:focus {
-  border-color: #0066cc;
-  outline: none;
+  border-color: #0077cc;
+  box-shadow: 0 0 0 4px rgba(0, 119, 204, 0.1);
   background-color: #fff;
-  box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+  outline: none;
 }
 
 .admission-form select {
@@ -72,16 +73,22 @@
 
 .admission-form textarea {
   resize: vertical;
+  min-height: 100px;
+}
+
+.admission-form input[type="file"] {
+  padding: 0.5rem;
+  background-color: #f5faff;
 }
 
 .admission-form button {
-  padding: 0.9rem;
+  padding: 1rem;
   background-color: #0066cc;
   color: white;
-  border: none;
-  border-radius: 8px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 10px;
   cursor: pointer;
   transition: background-color 0.3s, transform 0.2s;
 }
@@ -91,12 +98,24 @@
   transform: translateY(-1px);
 }
 
-@media screen and (max-width: 768px) {
+/* Grid for two-column layout on large screens */
+.admission-form .grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .admission h1 {
+    font-size: 2.2rem;
+  }
+
   .admission-form {
     padding: 1.5rem;
   }
 
-  .admission h1 {
-    font-size: 2rem;
+  .admission-form .grid-2 {
+    grid-template-columns: 1fr;
   }
 }
