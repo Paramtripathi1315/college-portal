@@ -1,0 +1,57 @@
+.syllabus {
+  padding: 3rem 1rem;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #f4f9ff, #eef4fb);
+  min-height: 100vh;
+}
+
+.syllabus h1 {
+  color: #003366;
+  font-size: 2.4rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  font-weight: 700;
+  text-shadow: 1px 1px #ddd;
+}
+
+/* PDF iframe styling */
+.syllabus iframe {
+  width: 100%;
+  max-width: 1000px;
+  height: 650px;
+  margin: 0 auto;
+  display: block;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  background-color: white;
+}
+
+/* Fallback/Error Text */
+.syllabus p {
+  text-align: center;
+  color: #cc0000;
+  font-size: 1.1rem;
+  margin-top: 2rem;
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .syllabus h1 {
+    font-size: 2rem;
+  }
+
+  .syllabus iframe {
+    height: 500px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .syllabus iframe {
+    height: 400px;
+  }
+
+  .syllabus h1 {
+    font-size: 1.7rem;
+  }
+}
