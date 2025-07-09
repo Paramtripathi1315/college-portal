@@ -1,0 +1,251 @@
+.home {
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Hero Section */
+.hero {
+  height: 500px;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: background-image 1s ease-in-out;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 0;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  padding: 2rem;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  max-width: 80%;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #fff;
+  font-weight: 700;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #eee;
+}
+
+.hero-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background-color: #0066cc;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.hero-btn:hover {
+  background-color: #005bb5;
+}
+
+/* Slider */
+.slider-container {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.slider-image {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.slider-image.active {
+  opacity: 1;
+}
+
+/* Highlights Section */
+.highlights {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding: 3rem 2rem;
+  background-color: #f4f4f4;
+  flex-wrap: wrap;
+}
+
+.highlight {
+  flex: 1;
+  min-width: 240px;
+  max-width: 300px;
+  text-align: center;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+  padding: 2rem;
+  transition: transform 0.3s ease;
+}
+
+.highlight:hover {
+  transform: translateY(-5px);
+}
+
+.highlight h3 {
+  font-size: 1.2rem;
+  color: #003366;
+  margin-bottom: 0.5rem;
+}
+
+.highlight p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+/* College Fest Gallery - Updated */
+.fest-gallery {
+  padding: 3rem 1rem;
+  background: #f5faff;
+  text-align: center;
+}
+
+.fest-gallery h2 {
+  font-size: 2.2rem;
+  color: #003366;
+  margin-bottom: 2rem;
+}
+
+.fest-images {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.fest-images img {
+  width: 100%;
+  height: 280px;
+  object-fit: cover;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.fest-images img:hover {
+  transform: scale(1.03);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .fest-images {
+    grid-template-columns: 1fr;
+  }
+
+  .fest-images img {
+    height: 220px;
+  }
+}
+
+/* Achievements */
+.achievements {
+  padding: 3rem 1rem;
+  background: linear-gradient(to right, #eaf4ff, #f9f9ff);
+  text-align: center;
+}
+
+.achievements h2 {
+  font-size: 2rem;
+  color: #004080;
+  margin-bottom: 1.2rem;
+}
+
+.achievements ul {
+  max-width: 800px;
+  margin: auto;
+  text-align: left;
+  list-style: none;
+  padding-left: 0;
+}
+
+.achievements ul li {
+  padding: 0.8rem 1rem;
+  font-size: 1.1rem;
+  color: #333;
+  background: #fff;
+  margin-bottom: 0.7rem;
+  border-left: 5px solid #007bff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Responsive */
+@media screen and (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero-content {
+    padding: 1.5rem;
+  }
+
+  .fest-images img {
+    width: 45%;
+    height: auto;
+  }
+
+  .achievements ul li {
+    font-size: 1rem;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .hero-content {
+    max-width: 95%;
+  }
+
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .highlight {
+    padding: 1.5rem;
+  }
+
+  .fest-images img {
+    width: 100%;
+  }
+}

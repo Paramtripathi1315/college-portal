@@ -1,0 +1,34 @@
+/* Reset & Base Layout */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #f8f9fc;
+  color: #222;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Ensures content is not hidden behind fixed navbar */
+main {
+  padding-top: 80px; /* Adjust if navbar height changes */
+  min-height: 100vh;
+  width: 100%;
+}
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Responsive image base styling */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
