@@ -133,3 +133,13 @@
   color: red;
   font-weight: 600;
 }
+.contact-info h3 {
+  margin-top: 1rem;
+  color: #003366; /* was #0066cc */
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+.contact-form button:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+}

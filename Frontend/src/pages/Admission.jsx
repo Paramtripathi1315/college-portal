@@ -1,23 +1,23 @@
-import './Admission.css';
-import axios from 'axios';
-import { useState } from 'react';
+import "../styles/Admission.css";
+import axios from "axios";
+import { useState } from "react";
 
 function Admission() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    course: '',
-    dob: '',
-    gender: '',
-    category: '',
-    fatherName: '',
-    motherName: '',
-    address: '',
-    qualification: '',
-    photo: '',
-    signature: '',
-    enrollmentNo: ''
+    fullName: "",
+    email: "",
+    phone: "",
+    course: "",
+    dob: "",
+    gender: "",
+    category: "",
+    fatherName: "",
+    motherName: "",
+    address: "",
+    qualification: "",
+    photo: "",
+    signature: "",
+    enrollmentNo: "",
   });
 
   const handleChange = (e) => {
@@ -35,24 +35,34 @@ function Admission() {
     }
   };
 
-  const generateEnrollmentNo = () => {
-    const random = Math.floor(100000 + Math.random() * 900000);
-    return `ENR${random}`;
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/admission",
+        formData
+      );
+      alert(`Admission Successful! Enrollment No: ${response.data.enrollmentNo}`);
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        course: "",
+        dob: "",
+        gender: "",
+        category: "",
+        fatherName: "",
+        motherName: "",
+        address: "",
+        qualification: "",
+        photo: "",
+        signature: "",
+        enrollmentNo: "",
+      });
+    } catch (err) {
+      alert(err.response?.data?.message || "Submission failed");
+    }
   };
-
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post('http://localhost:5000/api/admission', formData);
-    alert(`Admission Successful! Enrollment No: ${response.data.enrollmentNo}`);
-    setFormData({ fullName: '', email: '', phone: '', course: '', dob: '', address: '', qualification: '' });
-  } catch (err) {
-    alert(err.response?.data?.message || "Submission failed");
-  }
-};
-
 
   return (
     <div className="admission">
@@ -125,9 +135,11 @@ const handleSubmit = async (e) => {
 
         <label>Upload Passport Photo</label>
         <input type="file" name="photo" accept="image/*" onChange={handleFileChange} required />
+        {formData.photo && <img src={formData.photo} alt="Preview" width="100" />}
 
         <label>Upload Signature</label>
         <input type="file" name="signature" accept="image/*" onChange={handleFileChange} required />
+        {formData.signature && <img src={formData.signature} alt="Signature Preview" width="100" />}
 
         <button type="submit">Submit Admission</button>
       </form>

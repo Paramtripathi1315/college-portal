@@ -1,4 +1,4 @@
-import './About.css';
+import '../styles/About.css'
 import { useState } from 'react';
 
 const sections = [

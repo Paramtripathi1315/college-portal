@@ -1,9 +1,13 @@
-import "./Footer.css";
+import "../styles/Fotter.css";
 
 function Footer() {
   return (
     <footer className="footer">
-      <p>&copy; {new Date().getFullYear()} College Portal. All rights reserved.</p>
+      <div className="footer-content">
+        <p>
+          &copy; {new Date().getFullYear()} <strong>College Portal</strong>. All rights reserved.
+        </p>
+      </div>
     </footer>
   );
 }

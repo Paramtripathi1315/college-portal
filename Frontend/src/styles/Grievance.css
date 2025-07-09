@@ -1,0 +1,109 @@
+.grievance-form-container {
+  max-width: 600px;
+  margin: 3rem auto;
+  padding: 2rem;
+  background-color: #f5faff;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.grievance-form-container h2 {
+  text-align: center;
+  color: #003366;
+  margin-bottom: 1.5rem;
+  font-size: 1.8rem;
+}
+
+.grievance-form-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.grievance-form-container input,
+.grievance-form-container textarea {
+  margin-bottom: 1rem;
+  padding: 0.9rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.grievance-form-container input:focus,
+.grievance-form-container textarea:focus {
+  border-color: #003366;
+  outline: none;
+}
+
+.grievance-form-container textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.grievance-form-container button {
+  padding: 0.9rem;
+  background-color: #003366;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.grievance-form-container button:hover {
+  background-color: #0055aa;
+}
+
+.form-message {
+  text-align: center;
+  margin-top: 1rem;
+  font-weight: 500;
+  color: #2c662d;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .grievance-form-container {
+    padding: 1.5rem;
+    margin: 2rem 1rem;
+  }
+
+  .grievance-form-container h2 {
+    font-size: 1.5rem;
+  }
+
+  .grievance-form-container input,
+  .grievance-form-container textarea {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+
+  .grievance-form-container button {
+    font-size: 0.95rem;
+    padding: 0.75rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .grievance-form-container {
+    padding: 1rem;
+  }
+
+  .grievance-form-container h2 {
+    font-size: 1.3rem;
+  }
+
+  .grievance-form-container input,
+  .grievance-form-container textarea {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+
+  .grievance-form-container button {
+    font-size: 0.9rem;
+    padding: 0.7rem;
+  }
+}

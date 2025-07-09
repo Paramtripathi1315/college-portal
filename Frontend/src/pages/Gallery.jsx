@@ -1,20 +1,19 @@
-import './Gallery.css';
+import '../styles/Gallery.css';
 
 const images = [
-  "/campus.jpg",
-  "/building.jpg",
-  "/auditoriam.jpg",
-  "/lab1.jpg",
-  "/lab2.jpg",
-  "/lab3.jpg",
-  "/classroom.jpg",
-  "/library.jpg",
-  "/staffroom.jpg",
-  "/parking.jpg",
-  "/sports.jpg",
-  "/ground.jpg",
+  "/images/campus.jpg",
+  "/images/building.jpg",
+  "/images/auditoriam.jpg",
+  "/images/lab1.jpg",
+  "/images/lab2.jpg",
+  "/images/lab3.jpg",
+  "/images/classroom.jpg",
+  "/images/library.jpg",
+  "/images/staffroom.jpg",
+  "/images/parking.jpg",
+  "/images/sports.jpg",
+  "/images/ground.jpg",
 ];
-
 
 function Gallery() {
   return (

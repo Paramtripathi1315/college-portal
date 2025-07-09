@@ -1,5 +1,5 @@
-import './Notices.css';
-import { Link } from 'react-router-dom';
+import "../styles/Notices.css";
+import { Link } from "react-router-dom";
 
 const notices = [
   {
@@ -61,18 +61,29 @@ const notices = [
     title: "Holiday on 10th July (Election Day)",
     date: "2025-06-02",
     content: "College will remain closed due to local elections.",
-  }
+  },
 ];
 
 function Notices() {
   return (
     <div className="notices">
+      <nav className="breadcrumb">
+        <Link to="/">Home</Link> &gt; Notices
+      </nav>
+
       <h1>Latest Notices</h1>
       <div className="notice-grid">
         {notices.map((notice, index) => (
-          <Link to={`/notices/${notice.id}`} key={index} className="notice-card">
+          <Link
+            to={`/notices/${notice.id}`}
+            key={index}
+            className="notice-card"
+            aria-label={`View notice: ${notice.title}`}
+          >
             <h3>{notice.title}</h3>
-            <p><strong>{notice.date}</strong></p>
+            <p>
+              <strong>{notice.date}</strong>
+            </p>
             <p>{notice.content}</p>
           </Link>
         ))}

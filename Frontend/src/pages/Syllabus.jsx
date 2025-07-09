@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import './Syllabus.css';
+import '../styles/Syllabus.css';
 
 const syllabusPDFs = {
   bca: "/syllabus/bca.pdf",

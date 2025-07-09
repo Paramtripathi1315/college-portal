@@ -87,3 +87,17 @@
     font-size: 0.95rem;
   }
 }
+.stars {
+  margin-top: 1rem;
+}
+
+.stars span {
+  color: #ccc;
+  font-size: 1.2rem;
+  margin-right: 2px;
+  transition: color 0.3s;
+}
+
+.stars span.filled {
+  color: #f5b301;
+}

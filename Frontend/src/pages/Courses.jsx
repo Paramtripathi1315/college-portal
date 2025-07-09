@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import './Courses.css';
+import '../styles/Courses.css';
 
 const programToRouteId = {
   "BCA": "bca",
@@ -67,6 +67,9 @@ function Courses() {
   return (
     <div className="courses">
       <h1>Academic Programs</h1>
+       <nav className="breadcrumb">
+        <Link to="/">Home</Link> &gt; Courses
+      </nav>
       <div className="course-list">
         {coursesData.map((dept, index) => (
           <div className="course-card" key={index}>

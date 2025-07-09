@@ -97,3 +97,20 @@
     padding: 1.5rem;
   }
 }
+
+.breadcrumb {
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+  color: #555;
+  text-align: center;
+}
+
+.breadcrumb a {
+  color: #007acc;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.breadcrumb a:hover {
+  text-decoration: underline;
+}

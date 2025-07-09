@@ -1,28 +1,29 @@
-import './Home.css';
+import '../styles/Home.css';
 import About from './About';
 import Notices from './Notices';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const sliderImages = [
-  "/campus.jpg",
-  "/building.jpg",
-  "/auditoriam.jpg",
-  "/lab1.jpg",
-  "/lab2.jpg",
-  "/lab3.jpg",
-  "/classroom.jpg",
-  "/library.jpg",
-  "/parking.jpg",
-  "/ground.jpg",
+  "/images/campus.jpg",
+  "/images/building.jpg",
+  "/images/auditoriam.jpg",
+  "/images/lab1.jpg",
+  "/images/lab2.jpg",
+  "/images/lab3.jpg",
+  "/images/classroom.jpg",
+  "/images/library.jpg",
+  "/images/parking.jpg",
+  "/images/ground.jpg",
 ];
 
 const festImages = [
-  "/fest1.jpg",
-  "/fest2.jpg",
-  "/fest3.jpg",
-  "/fest4.jpg",
+  "/images/fest1.jpg",
+  "/images/fest2.jpg",
+  "/images/fest3.jpg",
+  "/images/fest4.jpg",
 ];
+
 
 function Home() {
   const [index, setIndex] = useState(0);
