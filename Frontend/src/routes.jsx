@@ -1,28 +1,31 @@
-import Home from './pages/Home';
-import About from './pages/About';
-import Faculty from './pages/Faculty';
-import Courses from './pages/Courses';
-import Contact from './pages/Contact';
-import Gallery from './pages/Gallery';
-import StudentCorner from './pages/StudentCorner';
-import Syllabus from './pages/Syllabus';
-import CourseDetails from './pages/CourseDetails';
-import Notices from './pages/Notices';
-import NoticeDetails from './pages/NoticeDetails';
-import Admission from './pages/Admission';
-import SignupLogin from './pages/SignupLogin';
-import Signup from './pages/Signup';
-import NotFound from './pages/NotFound';
-import PrivateRoute from './components/PrivateRoute';
-import UserDashboard from './pages/UserDashboard';
-import AdminDashboard from './pages/AdminDashboard';
-import PrivateRouteAdmin from './components/PrivateRouteAdmin';
+// src/routes.js
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Faculty from "./pages/Faculty";
+import Courses from "./pages/Courses";
+import Contact from "./pages/Contact";
+import Gallery from "./pages/Gallery";
+import StudentCorner from "./pages/StudentCorner";
+import Syllabus from "./pages/Syllabus";
+import CourseDetails from "./pages/CourseDetails";
+import Notices from "./pages/Notices";
+import NoticeDetails from "./pages/NoticeDetails";
+import Admission from "./pages/Admission";
+import SignupLogin from "./pages/SignupLogin";
+import Signup from "./pages/Signup";
+import NotFound from "./pages/NotFound";
+import PrivateRoute from "./components/PrivateRoute";
+import AdminDashboard from "./pages/AdminDashboard";
+import PrivateRouteAdmin from "./components/PrivateRouteAdmin";
+import AdmissionDetail from "./pages/AdmissionDetail";
+import GrievanceDetail from "./pages/GrievanceDetail";
 
 const routes = [
-  { path: '/signup', element: <Signup /> },
+  { path: "/signup", element: <Signup /> },
+  { path: "/auth", element: <SignupLogin /> },
 
   {
-    path: '/',
+    path: "/",
     element: (
       <PrivateRoute>
         <Home />
@@ -30,7 +33,7 @@ const routes = [
     ),
   },
   {
-    path: '/about',
+    path: "/about",
     element: (
       <PrivateRoute>
         <About />
@@ -38,7 +41,7 @@ const routes = [
     ),
   },
   {
-    path: '/faculty',
+    path: "/faculty",
     element: (
       <PrivateRoute>
         <Faculty />
@@ -46,7 +49,7 @@ const routes = [
     ),
   },
   {
-    path: '/courses',
+    path: "/courses",
     element: (
       <PrivateRoute>
         <Courses />
@@ -54,39 +57,7 @@ const routes = [
     ),
   },
   {
-    path: '/contact',
-    element: (
-      <PrivateRoute>
-        <Contact />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/gallery',
-    element: (
-      <PrivateRoute>
-        <Gallery />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/studentCorner',
-    element: (
-      <PrivateRoute>
-        <StudentCorner />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/syllabus/:course',
-    element: (
-      <PrivateRoute>
-        <Syllabus />
-      </PrivateRoute>
-    ),
-  },
-  {
-    path: '/course/:id',
+    path: "/course/:id",
     element: (
       <PrivateRoute>
         <CourseDetails />
@@ -94,7 +65,39 @@ const routes = [
     ),
   },
   {
-    path: '/notices',
+    path: "/contact",
+    element: (
+      <PrivateRoute>
+        <Contact />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/gallery",
+    element: (
+      <PrivateRoute>
+        <Gallery />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/studentCorner",
+    element: (
+      <PrivateRoute>
+        <StudentCorner />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/syllabus/:course",
+    element: (
+      <PrivateRoute>
+        <Syllabus />
+      </PrivateRoute>
+    ),
+  },
+  {
+    path: "/notices",
     element: (
       <PrivateRoute>
         <Notices />
@@ -102,7 +105,7 @@ const routes = [
     ),
   },
   {
-    path: '/notices/:id',
+    path: "/notices/:id",
     element: (
       <PrivateRoute>
         <NoticeDetails />
@@ -110,38 +113,39 @@ const routes = [
     ),
   },
   {
-    path: '/admission',
+    path: "/admission",
     element: (
       <PrivateRoute>
         <Admission />
       </PrivateRoute>
     ),
   },
+
   {
-    path: '/dashboard',
+    path: "/admin-dashboard",
     element: (
-      <PrivateRoute>
-        <UserDashboard/>
-      </PrivateRoute>
+      <PrivateRouteAdmin>
+        <AdminDashboard />
+      </PrivateRouteAdmin>
     ),
   },
   {
-     
-  
-  path: '/admin-dashboard',
-  element: (
-    <PrivateRouteAdmin>
-      <AdminDashboard />
-    </PrivateRouteAdmin>
-  )
-
-
-
+    path: "/admin/admission/:id",
+    element: (
+      <PrivateRouteAdmin>
+        <AdmissionDetail />
+      </PrivateRouteAdmin>
+    ),
   },
   {
-      path: '/auth', element: <SignupLogin /> ,
+    path: "/admin/grievance/:id",
+    element: (
+      <PrivateRouteAdmin>
+        <GrievanceDetail />
+      </PrivateRouteAdmin>
+    ),
   },
-  { path: '*', element: <NotFound /> },
+  { path: "*", element: <NotFound /> },
 ];
 
 export default routes;

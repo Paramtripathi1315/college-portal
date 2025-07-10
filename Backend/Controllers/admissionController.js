@@ -58,18 +58,28 @@ const submitAdmissionForm = async (req, res) => {
   }
 };
 
-// @desc    Get all admissions
 const getAllAdmissions = async (req, res) => {
   try {
-    const data = await Admission.find().sort({ createdAt: -1 });
+    const data = await Admission.find();
     res.json(data);
   } catch (err) {
-    console.error('Fetch admission error:', err);
-    res.status(500).json({ message: 'Server error while fetching admissions.' });
+    res.status(500).json({ error: "Server error" });
+  }
+};
+
+
+const getAdmissionById = async (req, res) => {
+  try {
+    const admission = await Admission.findById(req.params.id);
+    if (!admission) return res.status(404).json({ message: "Not found" });
+    res.json(admission);
+  } catch (err) {
+    res.status(500).json({ message: "Server error" });
   }
 };
 
 module.exports = {
   submitAdmissionForm,
   getAllAdmissions,
+  getAdmissionById,
 };

@@ -8,7 +8,9 @@ import './App.css';
 
 function AppLayout() {
   const location = useLocation();
-  const hideLayout = location.pathname === '/auth';
+  const hiddenRoutes = ['/auth', '/auth/login', '/auth/signup'];
+
+  const hideLayout = hiddenRoutes.includes(location.pathname);
 
   return (
     <>

@@ -1,7 +1,7 @@
+// src/components/Navbar.jsx
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import "../styles/Navbar.css"; 
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import "../styles/Navbar.css";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -10,34 +10,37 @@ function Navbar() {
   const handleLinkClick = () => {
     setMenuOpen(false); // Auto-close menu on link click
   };
-const handleLogout = async () => {
-  try {
-    // 1. Clear local user data (optional if you're using Redux)
-    localStorage.removeItem('token');
-    localStorage.removeItem('user'); // if stored
-    
-    // 2. Call backend to clear cookie (if using cookies)
-    await fetch('http://localhost:5000/api/auth/logout', {
-      method: 'POST',
-      credentials: 'include',
-    });
 
-    // 3. Redirect to auth
-    navigate('/auth');
-  } catch (err) {
-    console.error("Logout failed:", err);
-  }
-};
+  const handleLogout = async () => {
+    try {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
 
+      // Optional logout request (only needed if you set httpOnly cookies in backend)
+      await fetch("http://localhost:5000/api/auth/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+
+      navigate("/auth");
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
+  };
 
   return (
     <nav className="navbar">
       <h2 className="logo">
-        <Link to="/" className="logo-link">
-          <img src="../logo.png" alt="College Logo" className="logo-img" />
+        <Link to="/" className="logo-link" onClick={handleLinkClick}>
+          <img
+            src="/logo.png" // ✅ FIXED: Use absolute path so public/logo.png works
+            alt="College Logo"
+            className="logo-img"
+          />
           <span className="logo-text">College Portal</span>
         </Link>
       </h2>
+
       <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
         ☰
       </div>
@@ -52,9 +55,11 @@ const handleLogout = async () => {
         <li><Link to="/notices" onClick={handleLinkClick}>Notices</Link></li>
         <li><Link to="/studentCorner" onClick={handleLinkClick}>Student Corner</Link></li>
         <li><Link to="/admission" onClick={handleLinkClick}>Admission</Link></li>
-        <button onClick={handleLogout} className="logout-btn">
-        Logout
-      </button>
+        <li>
+          <button onClick={handleLogout} className="logout-btn">
+            Logout
+          </button>
+        </li>
       </ul>
     </nav>
   );

@@ -1,19 +1,19 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const upload = require('../middleware/upload');
-const { submitAdmissionForm, getAllAdmissions } = require('../Controllers/admissionController');
+const {
+  submitAdmissionForm,
+  getAllAdmissions,
+  getAdmissionById,
+} = require("../controllers/admissionController");
+const upload = require("../middleware/upload");
 
-// POST with image upload
-router.post(
-  '/',
-  upload.fields([
-    { name: 'photo', maxCount: 1 },
-    { name: 'signature', maxCount: 1 },
-  ]),
-  submitAdmissionForm
-);
+// POST /api/admission - Submit admission form with file upload
+router.post("/", upload.fields([{ name: 'photo' }, { name: 'signature' }]), submitAdmissionForm);
 
-// GET all admissions
-router.get('/', getAllAdmissions);
+// GET /api/admission - Get all admissions
+router.get("/", getAllAdmissions);
+
+// GET /api/admission/:id - Get admission by ID
+router.get("/:id", getAdmissionById);
 
 module.exports = router;

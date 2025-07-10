@@ -1,3 +1,4 @@
+// src/components/PrivateRouteAdmin.jsx
 import { Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
@@ -16,7 +17,7 @@ const PrivateRouteAdmin = ({ children }) => {
     setLoading(false);
   }, []);
 
-  if (loading) return null; // or loader spinner
+  if (loading) return null; // Optional: return a spinner here
 
   return authorized ? children : <Navigate to="/auth" />;
 };

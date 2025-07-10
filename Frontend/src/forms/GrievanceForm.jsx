@@ -5,8 +5,9 @@ import "../styles/GrievanceForm.css";
 const GrievanceForm = () => {
   const [formData, setFormData] = useState({
     name: "",
+    enrollment: "",
+    course: "",
     email: "",
-    subject: "",
     message: "",
   });
 
@@ -19,30 +20,51 @@ const GrievanceForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      // Assuming there's a route like /api/grievance (create backend if needed)
-      const res = await axios.post("http://localhost:5000/api/grievance", formData);
+      const res = await axios.post("http://localhost:5000/api/grievances", formData);
       if (res.data.success) {
-        setStatus("Grievance submitted successfully.");
-        setFormData({ name: "", email: "", subject: "", message: "" });
+        setStatus("✅ Grievance submitted successfully.");
+        setFormData({
+          name: "",
+          enrollment: "",
+          course: "",
+          email: "",
+          message: "",
+        });
       } else {
-        setStatus("Something went wrong. Please try again.");
+        setStatus("❌ Something went wrong. Please try again.");
       }
     } catch (err) {
       console.error(err);
-      setStatus("Server error. Please try later.");
+      setStatus("❌ Server error. Please try again later.");
     }
   };
 
   return (
     <div className="grievance-form-container">
-      <h2>Grievance Form</h2>
+      <h2>Submit Grievance</h2>
       <form onSubmit={handleSubmit}>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="Your Name"
+          placeholder="Full Name (as per admission)"
+          required
+        />
+        <input
+          type="text"
+          name="enrollment"
+          value={formData.enrollment}
+          onChange={handleChange}
+          placeholder="Enrollment Number"
+          required
+        />
+        <input
+          type="text"
+          name="course"
+          value={formData.course}
+          onChange={handleChange}
+          placeholder="Course"
           required
         />
         <input
@@ -50,25 +72,17 @@ const GrievanceForm = () => {
           name="email"
           value={formData.email}
           onChange={handleChange}
-          placeholder="Your Email"
-          required
-        />
-        <input
-          type="text"
-          name="subject"
-          value={formData.subject}
-          onChange={handleChange}
-          placeholder="Subject"
+          placeholder="Email"
           required
         />
         <textarea
           name="message"
           value={formData.message}
           onChange={handleChange}
-          placeholder="Write your grievance here..."
+          placeholder="Your grievance..."
           required
         ></textarea>
-        <button type="submit">Submit</button>
+        <button type="submit">Submit Grievance</button>
       </form>
       {status && <p className="form-message">{status}</p>}
     </div>

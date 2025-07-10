@@ -1,164 +1,154 @@
-import "../styles/Admission.css";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useState } from "react";
+import "../styles/AdminDashboard.css";
 
-function Admission() {
-  const [formData, setFormData] = useState({
-    fullName: "",
-    email: "",
-    phone: "",
-    course: "",
-    dob: "",
-    gender: "",
-    category: "",
-    fatherName: "",
-    motherName: "",
-    address: "",
-    qualification: "",
-  });
+function AdminDashboard() {
+  const navigate = useNavigate();
+  const [admissions, setAdmissions] = useState([]);
+  const [grievances, setGrievances] = useState([]);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedAdmission, setSelectedAdmission] = useState(null);
+  const [selectedGrievance, setSelectedGrievance] = useState(null);
 
-  const [photo, setPhoto] = useState(null);
-  const [signature, setSignature] = useState(null);
-  const [preview, setPreview] = useState({ photo: "", signature: "" });
-
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    if (name === "photo") {
-      setPhoto(files[0]);
-      setPreview((prev) => ({
-        ...prev,
-        photo: URL.createObjectURL(files[0]),
-      }));
-    } else if (name === "signature") {
-      setSignature(files[0]);
-      setPreview((prev) => ({
-        ...prev,
-        signature: URL.createObjectURL(files[0]),
-      }));
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/auth");
+      return;
     }
-  };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const data = new FormData();
-      Object.entries(formData).forEach(([key, val]) => {
-        data.append(key, val);
-      });
-      if (photo) data.append("photo", photo);
-      if (signature) data.append("signature", signature);
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/auth/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const fetchedUser = res.data.user;
+        setUser(fetchedUser);
 
-      const response = await axios.post("http://localhost:5000/api/admission", data, {
-        headers: { "Content-Type": "multipart/form-data" },
-      });
+        if (fetchedUser.role !== "admin") {
+          alert("Access denied. Admins only.");
+          navigate("/");
+        } else {
+          fetchForms();
+        }
+      } catch (err) {
+        console.error("User fetch error:", err);
+        navigate("/auth");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-      alert(`Admission Successful! Enrollment No: ${response.data.enrollmentNo}`);
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        course: "",
-        dob: "",
-        gender: "",
-        category: "",
-        fatherName: "",
-        motherName: "",
-        address: "",
-        qualification: "",
-      });
-      setPhoto(null);
-      setSignature(null);
-      setPreview({ photo: "", signature: "" });
-    } catch (err) {
-      alert(err.response?.data?.message || "Submission failed");
-    }
-  };
+    const fetchForms = async () => {
+      try {
+        const admissionRes = await axios.get("http://localhost:5000/api/admissions");
+        const grievanceRes = await axios.get("http://localhost:5000/api/grievances");
+        setAdmissions(Array.isArray(admissionRes.data) ? admissionRes.data : []);
+        setGrievances(Array.isArray(grievanceRes.data) ? grievanceRes.data : []);
+      } catch (error) {
+        console.error("Error fetching form data:", error);
+        setAdmissions([]);
+        setGrievances([]);
+      }
+    };
+
+    fetchUser();
+  }, [navigate]);
+
+  if (loading) return <div>Loading admin dashboard...</div>;
 
   return (
-    <div className="admission">
-      <h1>Admission Form</h1>
-      <form className="admission-form" onSubmit={handleSubmit}>
-        <label>Full Name</label>
-        <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required />
+    <div className="admin-dashboard">
+      <h1>Admin Dashboard</h1>
+      {user && <h2>Welcome, {user.name}</h2>}
 
-        <label>Father's Name</label>
-        <input type="text" name="fatherName" value={formData.fatherName} onChange={handleChange} required />
+      {/* ADMISSIONS */}
+      <div className="form-section">
+        <h3>📋 Admission Submissions</h3>
+        {admissions.length === 0 ? (
+          <p>No admission submissions found.</p>
+        ) : (
+          <ul>
+            {admissions.map((admission, idx) => (
+              <li key={idx} onClick={() => setSelectedAdmission(admission)}>
+                <strong>{admission.fullName}</strong> - {admission.email}
+              </li>
+            ))}
+          </ul>
+        )}
 
-        <label>Mother's Name</label>
-        <input type="text" name="motherName" value={formData.motherName} onChange={handleChange} required />
+        {selectedAdmission && (
+          <div className="detail-box">
+            <h4>Admission Details</h4>
+            <p><strong>Full Name:</strong> {selectedAdmission.fullName}</p>
+            <p><strong>Email:</strong> {selectedAdmission.email}</p>
+            <p><strong>Phone:</strong> {selectedAdmission.phone}</p>
+            <p><strong>DOB:</strong> {selectedAdmission.dob}</p>
+            <p><strong>Course:</strong> {selectedAdmission.course}</p>
+            <p><strong>Qualification:</strong> {selectedAdmission.qualification}</p>
+            <p><strong>Address:</strong> {selectedAdmission.address}</p>
+            <p><strong>Enrollment No:</strong> {selectedAdmission.enrollmentNo}</p>
 
-        <label>Email</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+            {selectedAdmission.photo && (
+              <p>
+                <strong>Photo:</strong>
+                <img
+                  src={`http://localhost:5000/uploads/${selectedAdmission.photo}`}
+                  width="100"
+                  alt="Student"
+                  onError={(e) => (e.target.style.display = "none")}
+                />
+              </p>
+            )}
 
-        <label>Phone</label>
-        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
+            {selectedAdmission.signature && (
+              <p>
+                <strong>Signature:</strong>
+                <img
+                  src={`http://localhost:5000/uploads/${selectedAdmission.signature}`}
+                  width="100"
+                  alt="Signature"
+                  onError={(e) => (e.target.style.display = "none")}
+                />
+              </p>
+            )}
 
-        <label>Date of Birth</label>
-        <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
+            <button onClick={() => setSelectedAdmission(null)}>Close</button>
+          </div>
+        )}
+      </div>
 
-        <label>Gender</label>
-        <select name="gender" value={formData.gender} onChange={handleChange} required>
-          <option value="">Select</option>
-          <option value="Male">Male</option>
-          <option value="Female">Female</option>
-          <option value="Other">Other</option>
-        </select>
+      {/* GRIEVANCES */}
+      <div className="form-section">
+        <h3>📨 Grievance Submissions</h3>
+        {grievances.length === 0 ? (
+          <p>No grievance submissions found.</p>
+        ) : (
+          <ul>
+            {grievances.map((grievance, idx) => (
+              <li key={idx} onClick={() => setSelectedGrievance(grievance)}>
+                <strong>{grievance.name}</strong> - {grievance.email}
+              </li>
+            ))}
+          </ul>
+        )}
 
-        <label>Category</label>
-        <select name="category" value={formData.category} onChange={handleChange} required>
-          <option value="">Select</option>
-          <option value="General">General</option>
-          <option value="OBC">OBC</option>
-          <option value="SC">SC</option>
-          <option value="ST">ST</option>
-          <option value="Other">Other</option>
-        </select>
-
-        <label>Highest Qualification</label>
-        <select name="qualification" value={formData.qualification} onChange={handleChange} required>
-          <option value="">Select</option>
-          <option value="10th">10th</option>
-          <option value="12th">12th</option>
-          <option value="Diploma">Diploma</option>
-          <option value="Graduation">Graduation</option>
-          <option value="Post Graduation">Post Graduation</option>
-        </select>
-
-        <label>Course Applying For</label>
-        <select name="course" value={formData.course} onChange={handleChange} required>
-          <option value="">-- Select Course --</option>
-          <option value="BCA">BCA</option>
-          <option value="MCA">MCA</option>
-          <option value="BBA">BBA</option>
-          <option value="MBA">MBA</option>
-          <option value="B.Com">B.Com</option>
-          <option value="M.Com">M.Com</option>
-          <option value="B.Sc. CS">B.Sc. CS</option>
-          <option value="M.Sc. CS">M.Sc. CS</option>
-          <option value="B.A.">B.A.</option>
-          <option value="M.A.">M.A.</option>
-          <option value="B.Ed.">B.Ed.</option>
-        </select>
-
-        <label>Address</label>
-        <textarea name="address" rows="4" value={formData.address} onChange={handleChange} required></textarea>
-
-        <label>Upload Passport Photo</label>
-        <input type="file" name="photo" accept="image/*" onChange={handleFileChange} required />
-        {preview.photo && <img src={preview.photo} alt="Preview" width="100" />}
-
-        <label>Upload Signature</label>
-        <input type="file" name="signature" accept="image/*" onChange={handleFileChange} required />
-        {preview.signature && <img src={preview.signature} alt="Signature Preview" width="100" />}
-
-        <button type="submit">Submit Admission</button>
-      </form>
+        {selectedGrievance && (
+          <div className="detail-box">
+            <h4>Grievance Details</h4>
+            <p><strong>Name:</strong> {selectedGrievance.name}</p>
+            <p><strong>Enrollment No:</strong> {selectedGrievance.enrollment}</p>
+            <p><strong>Course:</strong> {selectedGrievance.course}</p>
+            <p><strong>Email:</strong> {selectedGrievance.email}</p>
+            <p><strong>Message:</strong> {selectedGrievance.message}</p>
+            <button onClick={() => setSelectedGrievance(null)}>Close</button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }
 
-export default Admission;
+export default AdminDashboard;

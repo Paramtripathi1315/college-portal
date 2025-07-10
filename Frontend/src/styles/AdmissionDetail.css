@@ -1,0 +1,54 @@
+/* styles/AdmissionDetail.css */
+
+.detail-page {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 30px;
+  background-color: #f9f9f9;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.detail-page h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  font-size: 28px;
+}
+
+.detail-page p {
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 10px 0;
+  color: #333;
+}
+
+.detail-page strong {
+  color: #2c3e50;
+  font-weight: 600;
+}
+
+.detail-page img {
+  margin-top: 10px;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.detail-page button {
+  margin-top: 25px;
+  padding: 10px 20px;
+  background-color: #2980b9;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.detail-page button:hover {
+  background-color: #1c6692;
+}

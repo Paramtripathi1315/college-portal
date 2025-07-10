@@ -1,3 +1,4 @@
+// backend/models/admissionModel.js
 const mongoose = require('mongoose');
 
 const admissionSchema = new mongoose.Schema({
@@ -39,16 +40,12 @@ const admissionSchema = new mongoose.Schema({
   },
   profileImage: {
     type: String,
-    required: false // stored as filename or full path (uploads/)
+    required: false
   },
   signature: {
     type: String,
     required: false
   },
-  submittedAt: {
-    type: Date,
-    default: Date.now
-  }
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Admission', admissionSchema);

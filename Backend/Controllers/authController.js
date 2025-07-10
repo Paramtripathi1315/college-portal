@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 // @desc    Register new user (admin or student)
 // @route   POST /api/auth/register
 // @access  Public
-exports.register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
@@ -33,7 +33,7 @@ exports.register = async (req, res) => {
 // @desc    Login user
 // @route   POST /api/auth/login
 // @access  Public
-exports.login = async (req, res) => {
+const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -54,7 +54,7 @@ exports.login = async (req, res) => {
     res.status(200).json({
       success: true,
       message: 'Login successful',
-      token, // ✅ return JWT
+      token,
       user: {
         id: user._id,
         name: user.name,
@@ -68,10 +68,10 @@ exports.login = async (req, res) => {
   }
 };
 
-
-
-// Optional: Add this for /profile check
-exports.getProfile = async (req, res) => {
+// @desc    Get user profile using token
+// @route   GET /api/auth/profile
+// @access  Private
+const getProfile = async (req, res) => {
   const token = req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'Unauthorized' });
 
@@ -84,4 +84,10 @@ exports.getProfile = async (req, res) => {
   } catch (err) {
     res.status(401).json({ message: 'Invalid token' });
   }
+};
+
+module.exports = {
+  register,
+  login,
+  getProfile,
 };

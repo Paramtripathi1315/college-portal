@@ -1,15 +1,15 @@
-const express = require('express');
+// routes/grievanceRoutes.js
+const express = require("express");
 const router = express.Router();
-const grievanceController = require('../Controllers/grievanceController');
+const grievanceController = require("../controllers/grievanceController");
 
-// @route   POST /api/grievance
-// @desc    Submit a grievance
-// @access  Public
-router.post('/', grievanceController.submitGrievance);
+// POST /api/grievance – Submit grievance
+router.post("/", grievanceController.submitGrievance);
 
-// @route   GET /api/grievance
-// @desc    Get all grievances (Admin only)
-// @access  Admin
-router.get('/', grievanceController.getAllGrievances); // assuming you have this in controller
+// GET /api/grievance – Get all grievances (admin only)
+router.get("/", grievanceController.getAllGrievances);
+
+// GET /api/grievance/:id – Get grievance by ID
+router.get("/:id", grievanceController.getGrievanceById);
 
 module.exports = router;
