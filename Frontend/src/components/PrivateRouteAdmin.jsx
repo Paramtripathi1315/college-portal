@@ -1,14 +1,24 @@
 import { Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 const PrivateRouteAdmin = ({ children }) => {
-  const token = localStorage.getItem("token");
-  const user = JSON.parse(localStorage.getItem("user"));
+  const [loading, setLoading] = useState(true);
+  const [authorized, setAuthorized] = useState(false);
 
-  if (!token || user?.role !== "admin") {
-    return <Navigate to="/auth" />;
-  }
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
 
-  return children;
+    if (token && user?.role === "admin") {
+      setAuthorized(true);
+    }
+
+    setLoading(false);
+  }, []);
+
+  if (loading) return null; // or loader spinner
+
+  return authorized ? children : <Navigate to="/auth" />;
 };
 
 export default PrivateRouteAdmin;

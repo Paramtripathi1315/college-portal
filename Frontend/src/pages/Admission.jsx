@@ -15,33 +15,47 @@ function Admission() {
     motherName: "",
     address: "",
     qualification: "",
-    photo: "",
-    signature: "",
-    enrollmentNo: "",
   });
+
+  const [photo, setPhoto] = useState(null);
+  const [signature, setSignature] = useState(null);
+  const [preview, setPreview] = useState({ photo: "", signature: "" });
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData({ ...formData, [e.target.name]: reader.result });
-    };
-    if (file) {
-      reader.readAsDataURL(file);
+    const { name, files } = e.target;
+    if (name === "photo") {
+      setPhoto(files[0]);
+      setPreview((prev) => ({
+        ...prev,
+        photo: URL.createObjectURL(files[0]),
+      }));
+    } else if (name === "signature") {
+      setSignature(files[0]);
+      setPreview((prev) => ({
+        ...prev,
+        signature: URL.createObjectURL(files[0]),
+      }));
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/admission",
-        formData
-      );
+      const data = new FormData();
+      Object.entries(formData).forEach(([key, val]) => {
+        data.append(key, val);
+      });
+      if (photo) data.append("photo", photo);
+      if (signature) data.append("signature", signature);
+
+      const response = await axios.post("http://localhost:5000/api/admission", data, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
       alert(`Admission Successful! Enrollment No: ${response.data.enrollmentNo}`);
       setFormData({
         fullName: "",
@@ -55,10 +69,10 @@ function Admission() {
         motherName: "",
         address: "",
         qualification: "",
-        photo: "",
-        signature: "",
-        enrollmentNo: "",
       });
+      setPhoto(null);
+      setSignature(null);
+      setPreview({ photo: "", signature: "" });
     } catch (err) {
       alert(err.response?.data?.message || "Submission failed");
     }
@@ -135,11 +149,11 @@ function Admission() {
 
         <label>Upload Passport Photo</label>
         <input type="file" name="photo" accept="image/*" onChange={handleFileChange} required />
-        {formData.photo && <img src={formData.photo} alt="Preview" width="100" />}
+        {preview.photo && <img src={preview.photo} alt="Preview" width="100" />}
 
         <label>Upload Signature</label>
         <input type="file" name="signature" accept="image/*" onChange={handleFileChange} required />
-        {formData.signature && <img src={formData.signature} alt="Signature Preview" width="100" />}
+        {preview.signature && <img src={preview.signature} alt="Signature Preview" width="100" />}
 
         <button type="submit">Submit Admission</button>
       </form>

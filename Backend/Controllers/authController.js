@@ -1,5 +1,6 @@
 const User = require('../models/User');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
 // @desc    Register new user (admin or student)
 // @route   POST /api/auth/register
@@ -46,10 +47,16 @@ exports.login = async (req, res) => {
     const match = await bcrypt.compare(password, user.password);
     if (!match) return res.status(401).json({ message: 'Incorrect password.' });
 
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: '1d',
+    });
+
     res.status(200).json({
       success: true,
       message: 'Login successful',
+      token, // ✅ return JWT
       user: {
+        id: user._id,
         name: user.name,
         email: user.email,
         role: user.role
@@ -58,5 +65,23 @@ exports.login = async (req, res) => {
   } catch (err) {
     console.error('Login Error:', err);
     res.status(500).json({ message: 'Server error during login.' });
+  }
+};
+
+
+
+// Optional: Add this for /profile check
+exports.getProfile = async (req, res) => {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ message: 'Unauthorized' });
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id).select('-password');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    res.json({ user });
+  } catch (err) {
+    res.status(401).json({ message: 'Invalid token' });
   }
 };

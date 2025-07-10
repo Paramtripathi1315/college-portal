@@ -285,11 +285,6 @@ function CourseDetails() {
             &gt; {course.name}
           </nav>
           <div className="card">
-            <img
-              src={`/course-images/${id}.jpg`}
-              alt={course.name}
-              className="course-banner"
-            />
 
             <h1>{course.name}</h1>
             <div className="info-grid">

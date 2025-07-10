@@ -1,4 +1,4 @@
-const Admission = require('../models/admissionModel');
+const Admission = require('../models/Admission.Model');
 
 // @desc    Handle new admission form submission
 // @route   POST /api/admission
@@ -10,19 +10,20 @@ const submitAdmissionForm = async (req, res) => {
       email,
       phone,
       dob,
+      gender,
+      category,
+      fatherName,
+      motherName,
       course,
       address,
-      qualification
+      qualification,
     } = req.body;
 
-    // Multer handles files: req.files.image and req.files.signature
-    const image = req.files?.image?.[0]?.filename || '';
+    const photo = req.files?.photo?.[0]?.filename || '';
     const signature = req.files?.signature?.[0]?.filename || '';
 
-    // Generate random 8-digit enrollment number
     const enrollmentNo = `ENR${Math.floor(10000000 + Math.random() * 90000000)}`;
 
-    // Check if email+course already exists
     const exists = await Admission.findOne({ email, course });
     if (exists) {
       return res.status(400).json({ message: 'Admission already exists for this email and course.' });
@@ -33,12 +34,16 @@ const submitAdmissionForm = async (req, res) => {
       email,
       phone,
       dob,
+      gender,
+      category,
+      fatherName,
+      motherName,
       course,
       address,
       qualification,
-      image,
+      profileImage: photo,
       signature,
-      enrollmentNo
+      enrollmentNo,
     });
 
     await newAdmission.save();
@@ -53,9 +58,7 @@ const submitAdmissionForm = async (req, res) => {
   }
 };
 
-// @desc    Get all admission submissions
-// @route   GET /api/admission
-// @access  Admin
+// @desc    Get all admissions
 const getAllAdmissions = async (req, res) => {
   try {
     const data = await Admission.find().sort({ createdAt: -1 });
@@ -68,5 +71,5 @@ const getAllAdmissions = async (req, res) => {
 
 module.exports = {
   submitAdmissionForm,
-  getAllAdmissions
+  getAllAdmissions,
 };

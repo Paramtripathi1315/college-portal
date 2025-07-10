@@ -86,7 +86,7 @@ function About() {
       <div className="director-section">
         <h2>Message from the Director</h2>
         <div className="director-content">
-          <img src="/director.jpg" alt="College Director" className="director-img" />
+          <img src="../images/director.jpg" alt="College Director" className="director-img" />
           <p>
             "As the Director of this prestigious institution, I am proud to lead a team committed to academic brilliance and student-centric growth. We are not just imparting education but shaping responsible citizens who will lead the world with knowledge and integrity."
             <br /><br />

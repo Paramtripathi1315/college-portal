@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Login from './Login';
 import Signup from './Signup';
 import '../styles/LoginSignup.css';
-
+import '../styles/SignupLogin.css';
 function SignupLogin() {
   const [isLogin, setIsLogin] = useState(true);
   const [adminMode, setAdminMode] = useState(false); // true only for Admin Login

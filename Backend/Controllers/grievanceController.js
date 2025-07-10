@@ -1,17 +1,37 @@
 const Grievance = require('../models/Grievance');
+const Admission = require('../models/Admission.Model'); // ✅ Import Admission model
+
 
 // @desc    Submit a grievance
 // @route   POST /api/grievance
 // @access  Public
 exports.submitGrievance = async (req, res) => {
   try {
-    const { name, email, subject, message } = req.body;
+    const { name, enrollment, course, email, message } = req.body;
 
-    if (!name || !email || !subject || !message) {
+    // ✅ Validate all fields
+    if (!name || !enrollment || !course || !email || !message) {
       return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
-    const grievance = new Grievance({ name, email, subject, message });
+    // ✅ Check if student exists in admission records
+    const student = await Admission.findOne({
+  fullName: { $regex: new RegExp(`^${name}$`, 'i') },
+  enrollmentNo: enrollment,
+  course,
+  email: { $regex: new RegExp(`^${email}$`, 'i') }
+});
+
+
+    if (!student) {
+      return res.status(404).json({
+        success: false,
+        message: 'Student record not found. Please ensure your details match admission records.'
+      });
+    }
+
+    // ✅ Save grievance
+    const grievance = new Grievance({ name, enrollment, course, email, message });
     await grievance.save();
 
     res.status(201).json({ success: true, message: 'Grievance submitted successfully.' });

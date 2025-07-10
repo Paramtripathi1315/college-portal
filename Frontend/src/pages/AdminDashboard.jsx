@@ -1,17 +1,21 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import '../styles/AdminDashboard.css'; // Your styles
+import '../styles/AdminDashboard.css';
 
 function AdminDashboard() {
   const navigate = useNavigate();
   const [admissions, setAdmissions] = useState([]);
   const [grievances, setGrievances] = useState([]);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // ⬅️ ADD THIS
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    if (!token) return navigate("/auth");
+    if (!token) {
+      navigate("/auth");
+      return;
+    }
 
     const fetchUser = async () => {
       try {
@@ -19,18 +23,20 @@ function AdminDashboard() {
           headers: { Authorization: `Bearer ${token}` },
         });
 
-        const userData = res.data.user;
-        setUser(userData);
+        const fetchedUser = res.data.user;
+        setUser(fetchedUser);
 
-        if (userData.role !== "admin") {
+        if (fetchedUser.role !== "admin") {
           alert("Access denied. Admins only.");
-          return navigate("/");
+          navigate("/");
+        } else {
+          fetchForms(); // only fetch forms after role check
         }
-
-        fetchForms(); // ✅ fetch only if admin
       } catch (err) {
-        console.error(err);
+        console.error("User fetch error:", err);
         navigate("/auth");
+      } finally {
+        setLoading(false); // ⬅️ stop loading
       }
     };
 
@@ -47,6 +53,8 @@ function AdminDashboard() {
 
     fetchUser();
   }, [navigate]);
+
+  if (loading) return <div>Loading admin dashboard...</div>; // ⬅️ Prevent early redirect/render
 
   return (
     <div className="admin-dashboard">

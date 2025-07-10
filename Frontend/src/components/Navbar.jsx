@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css"; 
-import "../assets/logo.png"; 
 import { useNavigate } from "react-router-dom";
 
 function Navbar() {
@@ -11,17 +10,31 @@ function Navbar() {
   const handleLinkClick = () => {
     setMenuOpen(false); // Auto-close menu on link click
   };
+const handleLogout = async () => {
+  try {
+    // 1. Clear local user data (optional if you're using Redux)
+    localStorage.removeItem('token');
+    localStorage.removeItem('user'); // if stored
+    
+    // 2. Call backend to clear cookie (if using cookies)
+    await fetch('http://localhost:5000/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    });
 
-  const handleLogout = () => {
-    localStorage.removeItem('token'); // Clear auth token
-    navigate('/auth'); // Redirect to login/signup
-  };
+    // 3. Redirect to auth
+    navigate('/auth');
+  } catch (err) {
+    console.error("Logout failed:", err);
+  }
+};
+
 
   return (
     <nav className="navbar">
       <h2 className="logo">
         <Link to="/" className="logo-link">
-          <img src="../assets/logo.png" alt="College Logo" className="logo-img" />
+          <img src="../logo.png" alt="College Logo" className="logo-img" />
           <span className="logo-text">College Portal</span>
         </Link>
       </h2>

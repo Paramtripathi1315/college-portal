@@ -1,5 +1,6 @@
 import '../styles/Contact.css';
 import { useState } from 'react';
+import axios from 'axios';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -20,41 +21,28 @@ function Contact() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const admissions = JSON.parse(localStorage.getItem("admissionForms")) || [];
+    try {
+      await axios.post('http://localhost:5000/api/grievance', formData);
+      setSubmitted(true);
+      setError('');
+      setFormData({
+        name: '',
+        enrollment: '',
+        course: '',
+        email: '',
+        message: ''
+      });
 
-    const isValidStudent = admissions.some(
-      (student) =>
-        student.fullName.toLowerCase() === formData.name.toLowerCase() &&
-        student.email.toLowerCase() === formData.email.toLowerCase() &&
-        student.course === formData.course &&
-        student.enrollment === formData.enrollment
-    );
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (err) {
+  console.error("Grievance submission error:", err); // ← Add this
+  setError(err.response?.data?.message || 'Submission failed. Try again.');
+  setSubmitted(false);
+}
 
-    if (!isValidStudent) {
-      setError("❌ Student record not found. Please ensure your details match admission records.");
-      setSubmitted(false);
-      return;
-    }
-
-    const existing = JSON.parse(localStorage.getItem("grievanceForms")) || [];
-    const updated = [...existing, formData];
-    localStorage.setItem("grievanceForms", JSON.stringify(updated));
-
-    setFormData({
-      name: '',
-      enrollment: '',
-      course: '',
-      email: '',
-      message: ''
-    });
-    setError('');
-    setSubmitted(true);
-
-    // ✅ Auto-hide success message after 3 seconds
-    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
@@ -62,11 +50,9 @@ function Contact() {
       <h1>Student Grievance Portal</h1>
 
       <div className="contact-container">
-        {/* ✅ Show Success or Error */}
         {error && <p className="error-msg">{error}</p>}
         {submitted && <p className="success-msg">✅ Grievance submitted successfully!</p>}
 
-        {/* ✅ Only show form if not submitted */}
         {!submitted && (
           <form className="contact-form" onSubmit={handleSubmit}>
             <label>Full Name</label>

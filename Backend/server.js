@@ -5,8 +5,11 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const path = require('path');
 const authRoutes = require('./Routes/authRoutes');
-const admissionRoutes = require('./routes/admissionRoutes');
+const admissionRoutes = require('./Routes/admissionRoutes');
 const User = require('./models/User'); // ✅ Admin model
+const grievanceRoutes = require('./Routes/grievanceRoutes');
+const adminRoutes = require('./Routes/adminRoutes');
+
 
 // Load environment variables
 dotenv.config();
@@ -22,6 +25,9 @@ app.use(express.urlencoded({ extended: true }));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admission', admissionRoutes);
+app.use('/api/grievance', grievanceRoutes);
+app.use('/api/admin', adminRoutes);
+
 
 // Serve uploaded files (if any)
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

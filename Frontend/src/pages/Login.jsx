@@ -26,6 +26,7 @@ function Login({ setIsLogin, isAdmin = false }) {
       localStorage.setItem('token', token);
       localStorage.setItem('user', JSON.stringify(user));
       alert(res.data.message || 'Login successful!');
+window.location.href = user.role === 'admin' ? '/admin-dashboard' : '/';
 
 navigate(user.role === 'admin' ? '/admin-dashboard' : '/');
     } catch (err) {
