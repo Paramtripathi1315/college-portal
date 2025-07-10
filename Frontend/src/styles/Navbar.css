@@ -90,3 +90,15 @@
     font-size: 1.5rem;
   }
 }
+.logout-btn {
+  background-color: #d9534f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-left: auto;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.logout-btn:hover {
+  background-color: #c9302c;
+}

@@ -1,42 +1,50 @@
-import { useState } from 'react';
-import '../styles/Login.css';
+// src/pages/Login.jsx
+import React, { useState } from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import '../styles/LoginSignup.css';
 
-function Login() {
+function Login({ setIsLogin, isAdmin = false }) {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', credentials);
+      const { token, user } = res.data;
 
-    // Basic mock validation
-    if (credentials.email === "admin@college.edu" && credentials.password === "admin123") {
-      navigate("/dashboard"); // or any protected route
-    } else {
-      setError("Invalid email or password.");
+      if (isAdmin && user.role !== 'admin') {
+        alert("You are not authorized as admin.");
+        return;
+      }
+
+      localStorage.setItem('token', token);
+      localStorage.setItem('user', JSON.stringify(user));
+      alert(res.data.message || 'Login successful!');
+
+navigate(user.role === 'admin' ? '/admin-dashboard' : '/');
+    } catch (err) {
+      alert(err.response?.data?.message || 'Login failed');
     }
   };
 
   return (
-    <div className="login-container">
-      <form className="login-card" onSubmit={handleSubmit}>
-        <h2>Login</h2>
-        {error && <p className="error-msg">{error}</p>}
-
+    <div className="auth-container">
+      <h2>{isAdmin ? 'Admin Login' : 'Login'}</h2>
+      <form onSubmit={handleLogin}>
         <input
           type="email"
           name="email"
-          placeholder="Email"
+          placeholder="Email Address"
           value={credentials.email}
           onChange={handleChange}
           required
         />
-
         <input
           type="password"
           name="password"
@@ -45,9 +53,16 @@ function Login() {
           onChange={handleChange}
           required
         />
-
-        <button type="submit">Login</button>
+        <button type="submit">Log In</button>
       </form>
+      {!isAdmin && (
+        <p>
+          Don't have an account?{' '}
+          <button className="link-btn" onClick={() => setIsLogin(false)}>
+            Sign up
+          </button>
+        </p>
+      )}
     </div>
   );
 }

@@ -2,12 +2,19 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import "../styles/Navbar.css"; 
 import "../assets/logo.png"; 
+import { useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const handleLinkClick = () => {
     setMenuOpen(false); // Auto-close menu on link click
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('token'); // Clear auth token
+    navigate('/auth'); // Redirect to login/signup
   };
 
   return (
@@ -32,7 +39,9 @@ function Navbar() {
         <li><Link to="/notices" onClick={handleLinkClick}>Notices</Link></li>
         <li><Link to="/studentCorner" onClick={handleLinkClick}>Student Corner</Link></li>
         <li><Link to="/admission" onClick={handleLinkClick}>Admission</Link></li>
-        <li><Link to="/login">Login</Link></li>
+        <button onClick={handleLogout} className="logout-btn">
+        Logout
+      </button>
       </ul>
     </nav>
   );

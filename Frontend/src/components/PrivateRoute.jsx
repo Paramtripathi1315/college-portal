@@ -1,8 +1,8 @@
-// src/components/PrivateRoutes.jsx
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate } from "react-router-dom";
 
-const PrivateRoute = ({ user }) => {
-  return user ? <Outlet /> : <Navigate to="/login" replace />;
+const PrivateRoute = ({ children }) => {
+  const token = localStorage.getItem("token");
+  return token ? children : <Navigate to="/auth" />;
 };
 
 export default PrivateRoute;
