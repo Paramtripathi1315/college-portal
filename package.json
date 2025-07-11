@@ -19,6 +19,7 @@
   "homepage": "https://github.com/Paramtripathi1315/College-portal#readme",
   "description": "",
   "dependencies": {
+    "bcryptjs": "^3.0.2",
     "concurrently": "^9.2.0"
   }
 }

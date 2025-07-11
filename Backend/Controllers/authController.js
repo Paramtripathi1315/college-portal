@@ -7,9 +7,9 @@ const jwt = require('jsonwebtoken');
 // @access  Public
 const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role} = req.body;
 
-    if (!name || !email || !password || !role) {
+    if (!name || !email || !password ) {
       return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
@@ -18,8 +18,8 @@ const register = async (req, res) => {
       return res.status(409).json({ success: false, message: 'User already exists.' });
     }
 
-    const hash = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hash, role });
+   const user = new User({ name, email, password, role }); // Let pre-save do hashing
+
 
     await user.save();
 
@@ -44,8 +44,8 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(404).json({ message: 'User not found.' });
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ message: 'Incorrect password.' });
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ message: 'Incorrect password.' });
 
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1d',
