@@ -7,9 +7,17 @@ const jwt = require('jsonwebtoken');
 // @access  Public
 const register = async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
+    const { name, email, password, role} = req.body;
 
+<<<<<<< HEAD
     if (!name || !email || !password ) {
+=======
+<<<<<<< HEAD
+    if (!name || !email || !password ) {
+=======
+    if (!name || !email || !password) {
+>>>>>>> ade2f0d89719690d88415374dfc6ba0ffb4a4103
+>>>>>>> b0ea0ff1b189f4255088ffa5ffb968de59966815
       return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
@@ -18,8 +26,13 @@ const register = async (req, res) => {
       return res.status(409).json({ success: false, message: 'User already exists.' });
     }
 
+<<<<<<< HEAD
     // Let mongoose pre-save hook hash the password
     const user = new User({ name, email, password, role });
+=======
+   const user = new User({ name, email, password, role }); // Let pre-save do hashing
+
+>>>>>>> b0ea0ff1b189f4255088ffa5ffb968de59966815
 
     await user.save();
 
@@ -49,11 +62,16 @@ const login = async (req, res) => {
       return res.status(404).json({ message: 'User not found.' });
     }
 
+<<<<<<< HEAD
     // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Incorrect password.' });
     }
+=======
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ message: 'Incorrect password.' });
+>>>>>>> b0ea0ff1b189f4255088ffa5ffb968de59966815
 
     // Generate token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
