@@ -52,17 +52,19 @@ const getAllGrievances = async (req, res) => {
 // @desc    Get a grievance by ID
 // @route   GET /api/grievance/:id
 // @access  Admin
-exports.getGrievanceById = async (req, res) => {
+
+const getGrievanceById = async (req, res) => {
   try {
     const grievance = await Grievance.findById(req.params.id);
-    if (!grievance)
-      return res.status(404).json({ message: "Grievance not found" });
-
-    res.json(grievance);
-  } catch (err) {
-    res.status(500).json({ message: "Error fetching grievance" });
+    if (!grievance) {
+      return res.status(404).json({ success: false, message: "Grievance not found" });
+    }
+    res.status(200).json(grievance);
+  } catch (error) {
+    res.status(500).json({ success: false, message: "Server error" });
   }
 };
+
 
 module.exports = {
   submitGrievance,

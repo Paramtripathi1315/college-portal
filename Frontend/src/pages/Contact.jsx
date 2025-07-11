@@ -25,7 +25,7 @@ function Contact() {
     e.preventDefault();
 
     try {
-      await axios.post('http://localhost:5000/api/grievance', formData);
+      await axios.post('http://localhost:5000/api/grievances', formData);
       setSubmitted(true);
       setError('');
       setFormData({

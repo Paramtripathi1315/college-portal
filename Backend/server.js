@@ -35,6 +35,7 @@ app.use('/api/admin', adminRoutes);
 app.get('/', (req, res) => {
   res.send('🎓 College Portal Backend Running');
 });
+console.log("MONGO_URI:", process.env.MONGO_URI);
 
 // Connect to MongoDB and start server
 mongoose
