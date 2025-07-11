@@ -9,7 +9,11 @@ const register = async (req, res) => {
   try {
     const { name, email, password, role} = req.body;
 
+<<<<<<< HEAD
     if (!name || !email || !password ) {
+=======
+    if (!name || !email || !password) {
+>>>>>>> ade2f0d89719690d88415374dfc6ba0ffb4a4103
       return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
