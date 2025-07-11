@@ -9,7 +9,7 @@ const register = async (req, res) => {
   try {
     const { name, email, password, role } = req.body;
 
-    if (!name || !email || !password) {
+    if (!name || !email || !password ) {
       return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
@@ -18,17 +18,18 @@ const register = async (req, res) => {
       return res.status(409).json({ success: false, message: 'User already exists.' });
     }
 
-    const hash = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hash, role });
+    // Let mongoose pre-save hook hash the password
+    const user = new User({ name, email, password, role });
 
     await user.save();
 
-    res.status(201).json({ success: true, message: 'User registered successfully.' });
+    return res.status(201).json({ success: true, message: 'User registered successfully.' });
   } catch (err) {
     console.error('Registration Error:', err);
     res.status(500).json({ success: false, message: 'Server error during registration.' });
   }
 };
+
 
 // @desc    Login user
 // @route   POST /api/auth/login
@@ -37,21 +38,30 @@ const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
+    // Validate
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
+    // Find user
     const user = await User.findOne({ email });
-    if (!user) return res.status(404).json({ message: 'User not found.' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
 
-    const match = await bcrypt.compare(password, user.password);
-    if (!match) return res.status(401).json({ message: 'Incorrect password.' });
+    // Compare passwords
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Incorrect password.' });
+    }
 
+    // Generate token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
 
-    res.status(200).json({
+    // Return token and user info
+    return res.status(200).json({
       success: true,
       message: 'Login successful',
       token,
@@ -59,8 +69,8 @@ const login = async (req, res) => {
         id: user._id,
         name: user.name,
         email: user.email,
-        role: user.role
-      }
+        role: user.role,
+      },
     });
   } catch (err) {
     console.error('Login Error:', err);
@@ -68,21 +78,23 @@ const login = async (req, res) => {
   }
 };
 
-// @desc    Get user profile using token
+// @desc    Get profile from token
 // @route   GET /api/auth/profile
 // @access  Private
 const getProfile = async (req, res) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Unauthorized' });
-
   try {
+    const token = req.headers.authorization?.split(' ')[1];
+    if (!token) return res.status(401).json({ message: 'Unauthorized. Token missing.' });
+
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const user = await User.findById(decoded.id).select('-password');
-    if (!user) return res.status(404).json({ message: 'User not found' });
+
+    if (!user) return res.status(404).json({ message: 'User not found.' });
 
     res.json({ user });
   } catch (err) {
-    res.status(401).json({ message: 'Invalid token' });
+    console.error('Profile fetch error:', err);
+    return res.status(401).json({ message: 'Invalid token.' });
   }
 };
 

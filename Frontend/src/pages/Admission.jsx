@@ -2,8 +2,6 @@ import '../styles/Admission.css';
 import axios from 'axios';
 import { useState } from 'react';
 
-
-
 function Admission() {
   const [formData, setFormData] = useState({
     fullName: '',
@@ -27,28 +25,27 @@ function Admission() {
   };
 
   const handleFileChange = (e) => {
-  setFormData({ ...formData, [e.target.name]: e.target.files[0] });
-};
-
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      setFormData({ ...formData, [e.target.name]: reader.result });
+    };
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
 
 
 
 const handleSubmit = async (e) => {
   e.preventDefault();
-
-  const form = new FormData();
-  Object.entries(formData).forEach(([key, value]) => {
-    form.append(key, value);
-  });
-
   try {
-    const res = await axios.post('http://localhost:5000/api/admissions', form, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    });
-    alert(`Admission Successful! Enrollment No: ${res.data.enrollmentNo}`);
+    const response = await axios.post('http://localhost:5000/api/admissions', formData);
+    alert(`Admission Successful! Enrollment No: ${response.data.enrollmentNo}`);
+    setFormData({ fullName: '', email: '', phone: '', course: '', dob: '', address: '', qualification: '' });
   } catch (err) {
-    alert(err.response?.data?.message || 'Submission failed');
+    alert(err.response?.data?.message || "Submission failed");
   }
 };
 
