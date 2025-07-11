@@ -2,22 +2,14 @@ const User = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
-// @desc    Register new user (admin or student)
-// @route   POST /api/auth/register
-// @access  Public
+// @desc Register new user (admin or student)
+// @route POST /api/auth/register
+// @access Public
 const register = async (req, res) => {
   try {
-    const { name, email, password, role} = req.body;
+    const { name, email, password, role } = req.body;
 
-<<<<<<< HEAD
-    if (!name || !email || !password ) {
-=======
-<<<<<<< HEAD
-    if (!name || !email || !password ) {
-=======
-    if (!name || !email || !password) {
->>>>>>> ade2f0d89719690d88415374dfc6ba0ffb4a4103
->>>>>>> b0ea0ff1b189f4255088ffa5ffb968de59966815
+    if (!name || !email || !password || !role) {
       return res.status(400).json({ success: false, message: 'All fields are required.' });
     }
 
@@ -26,13 +18,8 @@ const register = async (req, res) => {
       return res.status(409).json({ success: false, message: 'User already exists.' });
     }
 
-<<<<<<< HEAD
-    // Let mongoose pre-save hook hash the password
+    // Let pre-save hook in User model hash the password
     const user = new User({ name, email, password, role });
-=======
-   const user = new User({ name, email, password, role }); // Let pre-save do hashing
-
->>>>>>> b0ea0ff1b189f4255088ffa5ffb968de59966815
 
     await user.save();
 
@@ -43,42 +30,31 @@ const register = async (req, res) => {
   }
 };
 
-
-// @desc    Login user
-// @route   POST /api/auth/login
-// @access  Public
+// @desc Login user
+// @route POST /api/auth/login
+// @access Public
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
 
-    // Validate
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
-    // Find user
     const user = await User.findOne({ email });
     if (!user) {
       return res.status(404).json({ message: 'User not found.' });
     }
 
-<<<<<<< HEAD
-    // Compare passwords
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
       return res.status(401).json({ message: 'Incorrect password.' });
     }
-=======
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return res.status(401).json({ message: 'Incorrect password.' });
->>>>>>> b0ea0ff1b189f4255088ffa5ffb968de59966815
 
-    // Generate token
     const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: '1d',
     });
 
-    // Return token and user info
     return res.status(200).json({
       success: true,
       message: 'Login successful',
@@ -96,9 +72,9 @@ const login = async (req, res) => {
   }
 };
 
-// @desc    Get profile from token
-// @route   GET /api/auth/profile
-// @access  Private
+// @desc Get profile from token
+// @route GET /api/auth/profile
+// @access Private
 const getProfile = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(' ')[1];
