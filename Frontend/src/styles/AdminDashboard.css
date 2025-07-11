@@ -1,43 +1,155 @@
 .admin-dashboard {
   padding: 2rem;
-  font-family: 'Segoe UI', sans-serif;
-  background-color: #f4f6f9;
+  background: #f3f4f6;
   min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+  color: #1f2937;
 }
 
 .admin-dashboard h1 {
-  color: #003366;
   text-align: center;
+  font-size: 2.5rem;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+.admin-dashboard h2 {
+  text-align: center;
+  font-size: 1.5rem;
   margin-bottom: 2rem;
+  color: #4b5563;
 }
 
-.dashboard-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 1.5rem;
+.form-section {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+  transition: transform 0.3s ease;
 }
 
-.dashboard-card {
-  background-color: #ffffff;
-  padding: 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
-  text-decoration: none;
-  color: #003366;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+.form-section:hover {
+  transform: scale(1.01);
 }
 
-.dashboard-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+.form-section h3 {
+  font-size: 1.4rem;
+  color: #2563eb;
+  margin-bottom: 1rem;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0.5rem;
 }
 
-.dashboard-card h2 {
+.form-section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.form-section ul li {
+  padding: 0.7rem 1rem;
   margin-bottom: 0.5rem;
-  font-size: 1.3rem;
+  background-color: #f9fafb;
+  border-left: 5px solid #3b82f6;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
-.dashboard-card p {
+.form-section ul li:hover {
+  background-color: #eff6ff;
+}
+
+.details-box {
+  margin-top: 1.5rem;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 1rem;
+  padding: 1rem 1.5rem;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.details-box h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  color: #1d4ed8;
+}
+
+.details-box p {
+  margin: 0.4rem 0;
   font-size: 0.95rem;
-  color: #555;
+  color: #374151;
+}
+
+.details-box img {
+  margin-top: 0.5rem;
+  border: 1px solid #9ca3af;
+  border-radius: 0.5rem;
+}
+
+.details-box button {
+  margin-top: 1rem;
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.details-box button:hover {
+  background-color: #dc2626;
+}
+
+/* Scroll styling for lists */
+.form-section ul::-webkit-scrollbar {
+  width: 8px;
+}
+.form-section ul::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 10px;
+}
+
+/* Responsive layout */
+@media screen and (max-width: 768px) {
+  .admin-dashboard {
+    padding: 1rem;
+  }
+
+  .form-section {
+    padding: 1rem;
+  }
+
+  .details-box {
+    padding: 0.8rem;
+  }
+
+  .admin-dashboard h1 {
+    font-size: 2rem;
+  }
+
+  .admin-dashboard h2 {
+    font-size: 1.2rem;
+  }
+
+  .form-section h3 {
+    font-size: 1.2rem;
+  }
+}
+
+/* Simple fade in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

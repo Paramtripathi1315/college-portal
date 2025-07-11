@@ -102,3 +102,11 @@
 .logout-btn:hover {
   background-color: #c9302c;
 }
+
+@media (max-width: 768px) {
+  .logout-btn {
+    margin-left: 0;
+    width: 100%;
+    text-align: center;
+  }
+}

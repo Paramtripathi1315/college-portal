@@ -1,15 +1,36 @@
 // src/components/Navbar.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../styles/Navbar.css";
+import axios from 'axios';
 
 function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [user, setUser] = useState(null);
   const navigate = useNavigate();
 
   const handleLinkClick = () => {
     setMenuOpen(false); // Auto-close menu on link click
   };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    const fetchUser = async () => {
+      try {
+        const res = await axios.get("http://localhost:5000/api/auth/profile", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(res.data.user);
+      } catch (err) {
+        console.error("Navbar user fetch error:", err);
+        setUser(null);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -55,6 +76,12 @@ function Navbar() {
         <li><Link to="/notices" onClick={handleLinkClick}>Notices</Link></li>
         <li><Link to="/studentCorner" onClick={handleLinkClick}>Student Corner</Link></li>
         <li><Link to="/admission" onClick={handleLinkClick}>Admission</Link></li>
+        <li>
+          {user?.role === "admin" && (
+            <Link to="/admin-dashboard">Admin Dashboard</Link>
+          )}
+
+          </li>
         <li>
           <button onClick={handleLogout} className="logout-btn">
             Logout

@@ -38,7 +38,7 @@ const admissionSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  profileImage: {
+  photo: {
     type: String,
     required: false
   },

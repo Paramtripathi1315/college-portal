@@ -11,8 +11,9 @@ dotenv.config();
 // Route imports
 const authRoutes = require('./Routes/authRoutes');
 const admissionRoutes = require('./Routes/admissionRoutes');
-const grievanceRoutes = require('./Routes/grievanceRoutes');
 const adminRoutes = require('./Routes/adminRoutes');
+const grievanceRoutes = require('./Routes/grievanceRoutes');
+
 
 // Initialize Express app
 const app = express();
@@ -28,7 +29,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/admissions', admissionRoutes); // Matches frontend route
-app.use('/api/grievances', grievanceRoutes);
+// server.js
+
+app.use('/api/grievances', grievanceRoutes); // ✅ Not /api/grievance (with no "s")
 app.use('/api/admin', adminRoutes);
 
 // Fallback route

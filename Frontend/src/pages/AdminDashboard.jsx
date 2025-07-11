@@ -4,6 +4,7 @@ import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import "../styles/AdminDashboard.css";
 
+
 function AdminDashboard() {
   const navigate = useNavigate();
   const [admissions, setAdmissions] = useState([]);
@@ -59,6 +60,7 @@ function AdminDashboard() {
 
     fetchUser();
   }, [navigate]);
+console.log("Grievances:", grievances);
 
   if (loading) return <div>Loading admin dashboard...</div>;
 
@@ -82,6 +84,7 @@ function AdminDashboard() {
           </ul>
         )}
 
+
         {selectedAdmission && (
           <div className="details-box">
             <h4>📌 Admission Details</h4>
@@ -94,11 +97,11 @@ function AdminDashboard() {
             <p><strong>Qualification:</strong> {selectedAdmission.qualification}</p>
             <p><strong>Address:</strong> {selectedAdmission.address}</p>
 
-            {selectedAdmission.profileImage && (
+            {selectedAdmission.photo && (
               <p>
                 <strong>Photo:</strong>{" "}
                 <img
-                  src={`http://localhost:5000/uploads/${selectedAdmission.profileImage}`}
+                  src={`http://localhost:5000/uploads/${selectedAdmission.photo}`}
                   width="100"
                   alt={`${selectedAdmission.fullName}`}
                   onError={(e) => (e.target.style.display = "none")}

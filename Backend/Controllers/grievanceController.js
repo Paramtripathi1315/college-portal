@@ -41,11 +41,11 @@ const submitGrievance = async (req, res) => {
 // @access  Admin
 const getAllGrievances = async (req, res) => {
   try {
-    const grievances = await Grievance.find().sort({ createdAt: -1 });
-    res.status(200).json({ success: true, grievances });
+    const data = await Grievance.find();
+    res.json(data); // ✅ sends all grievance data
   } catch (err) {
-    console.error('Fetching Grievances Error:', err);
-    res.status(500).json({ success: false, message: 'Server error while fetching grievances.' });
+    console.error("Grievance fetch error:", err);
+    res.status(500).json({ error: "Server error" });
   }
 };
 

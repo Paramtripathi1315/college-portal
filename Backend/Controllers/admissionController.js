@@ -41,7 +41,7 @@ const submitAdmissionForm = async (req, res) => {
       course,
       address,
       qualification,
-      profileImage: photo,
+      photo,
       signature,
       enrollmentNo,
     });

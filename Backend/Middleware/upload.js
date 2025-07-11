@@ -4,9 +4,7 @@ const fs = require('fs');
 
 // Ensure 'uploads/' folder exists
 const uploadPath = path.join(__dirname, '..', 'uploads');
-if (!fs.existsSync(uploadPath)) {
-  fs.mkdirSync(uploadPath);
-}
+fs.mkdirSync(uploadPath, { recursive: true }); // ensure directory exists
 
 // Multer storage config
 const storage = multer.diskStorage({
@@ -20,7 +18,7 @@ const storage = multer.diskStorage({
   }
 });
 
-// File filter to allow only JPG/JPEG/PNG
+// Allow only JPG/JPEG/PNG
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png/;
   const ext = path.extname(file.originalname).toLowerCase();
@@ -32,11 +30,10 @@ const fileFilter = (req, file, cb) => {
   }
 };
 
-// Exported upload middleware
 const upload = multer({
   storage,
   fileFilter,
-  limits: { fileSize: 2 * 1024 * 1024 } // Max 2MB
+  limits: { fileSize: 2 * 1024 * 1024 } // 2MB max
 });
 
 module.exports = upload;
