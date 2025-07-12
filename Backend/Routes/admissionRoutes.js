@@ -4,7 +4,7 @@ const {
   submitAdmissionForm,
   getAllAdmissions,
   getAdmissionById,
-} = require("../controllers/admissionController");
+} = require("../Controllers/admissionController");
 const upload = require("../middleware/upload");
 
 // POST /api/admission - Submit admission form with file upload
