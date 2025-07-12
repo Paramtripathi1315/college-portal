@@ -20,7 +20,6 @@ function Signup({ setIsLogin }) {
     e.preventDefault();
     try {
       const res = await axios.post('http://localhost:5000/api/auth/signup', formData);
-      alert(res.data.message || 'Signup successful!');
       localStorage.setItem('token', res.data.token);
       navigate('/'); // ⬅️ redirect after signup
     } catch (err) {
