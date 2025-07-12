@@ -5,7 +5,7 @@ const {
   getAllAdmissions,
   getAdmissionById,
 } = require("../Controllers/admissionController");
-const upload = require("../middleware/upload");
+const upload = require("../Middleware/upload");
 
 // POST /api/admission - Submit admission form with file upload
 router.post("/", upload.fields([{ name: 'photo' }, { name: 'signature' }]), submitAdmissionForm);
