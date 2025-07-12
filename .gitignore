@@ -2,6 +2,8 @@
 
 # dependencies
 /node_modules
+/frontend/node_modules
+/backend/node_modules
 /.pnp
 .pnp.js
 
@@ -26,3 +28,8 @@ yarn-error.log*
 .env
 backend/uploads/*
 !backend/uploads/.gitkeep
+node_modules/
+
+
+
+node_modules/
