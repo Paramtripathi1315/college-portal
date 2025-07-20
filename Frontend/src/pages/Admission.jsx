@@ -1,23 +1,23 @@
-import '../styles/Admission.css';
-import axios from 'axios';
-import { useState } from 'react';
+import "../styles/Admission.css";
+import axios from "axios";
+import { useState } from "react";
 
 function Admission() {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    phone: '',
-    course: '',
-    dob: '',
-    gender: '',
-    category: '',
-    fatherName: '',
-    motherName: '',
-    address: '',
-    qualification: '',
-    photo: '',
-    signature: '',
-    enrollmentNo: ''
+    fullName: "",
+    email: "",
+    phone: "",
+    course: "",
+    dob: "",
+    gender: "",
+    category: "",
+    fatherName: "",
+    motherName: "",
+    address: "",
+    qualification: "",
+    photo: "",
+    signature: "",
+    enrollmentNo: "",
   });
 
   const handleChange = (e) => {
@@ -35,45 +35,94 @@ function Admission() {
     }
   };
 
-
-
-
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const response = await axios.post('http://localhost:5000/api/admissions', formData);
-    alert(`Admission Successful! Enrollment No: ${response.data.enrollmentNo}`);
-    setFormData({ fullName: '', email: '', phone: '', course: '', dob: '', address: '', qualification: '' });
-  } catch (err) {
-    alert(err.response?.data?.message || "Submission failed");
-  }
-};
-
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/admissions",
+        formData
+      );
+      alert(
+        `Admission Successful! Enrollment No: ${response.data.enrollmentNo}`
+      );
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        course: "",
+        dob: "",
+        address: "",
+        qualification: "",
+      });
+    } catch (err) {
+      alert(err.response?.data?.message || "Submission failed");
+    }
+  };
 
   return (
     <div className="admission">
       <h1>Admission Form</h1>
       <form className="admission-form" onSubmit={handleSubmit}>
         <label>Full Name</label>
-        <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} required />
+        <input
+          type="text"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
+          required
+        />
 
         <label>Father's Name</label>
-        <input type="text" name="fatherName" value={formData.fatherName} onChange={handleChange} required />
+        <input
+          type="text"
+          name="fatherName"
+          value={formData.fatherName}
+          onChange={handleChange}
+          required
+        />
 
         <label>Mother's Name</label>
-        <input type="text" name="motherName" value={formData.motherName} onChange={handleChange} required />
+        <input
+          type="text"
+          name="motherName"
+          value={formData.motherName}
+          onChange={handleChange}
+          required
+        />
 
         <label>Email</label>
-        <input type="email" name="email" value={formData.email} onChange={handleChange} required />
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          required
+        />
 
         <label>Phone</label>
-        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} required />
+        <input
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          required
+        />
 
         <label>Date of Birth</label>
-        <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
-
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob ? formData.dob.split("T")[0] : ""}
+          onChange={handleChange}
+          required
+        />
         <label>Gender</label>
-        <select name="gender" value={formData.gender} onChange={handleChange} required>
+        <select
+          name="gender"
+          value={formData.gender}
+          onChange={handleChange}
+          required
+        >
           <option value="">Select</option>
           <option value="Male">Male</option>
           <option value="Female">Female</option>
@@ -81,7 +130,12 @@ const handleSubmit = async (e) => {
         </select>
 
         <label>Category</label>
-        <select name="category" value={formData.category} onChange={handleChange} required>
+        <select
+          name="category"
+          value={formData.category}
+          onChange={handleChange}
+          required
+        >
           <option value="">Select</option>
           <option value="General">General</option>
           <option value="OBC">OBC</option>
@@ -91,7 +145,12 @@ const handleSubmit = async (e) => {
         </select>
 
         <label>Highest Qualification</label>
-        <select name="qualification" value={formData.qualification} onChange={handleChange} required>
+        <select
+          name="qualification"
+          value={formData.qualification}
+          onChange={handleChange}
+          required
+        >
           <option value="">Select</option>
           <option value="10th">10th</option>
           <option value="12th">12th</option>
@@ -101,7 +160,12 @@ const handleSubmit = async (e) => {
         </select>
 
         <label>Course Applying For</label>
-        <select name="course" value={formData.course} onChange={handleChange} required>
+        <select
+          name="course"
+          value={formData.course}
+          onChange={handleChange}
+          required
+        >
           <option value="">-- Select Course --</option>
           <option value="BCA">BCA</option>
           <option value="MCA">MCA</option>
@@ -117,13 +181,31 @@ const handleSubmit = async (e) => {
         </select>
 
         <label>Address</label>
-        <textarea name="address" rows="4" value={formData.address} onChange={handleChange} required></textarea>
+        <textarea
+          name="address"
+          rows="4"
+          value={formData.address}
+          onChange={handleChange}
+          required
+        ></textarea>
 
         <label>Upload Passport Photo</label>
-        <input type="file" name="photo" accept="image/*" onChange={handleFileChange} required />
+        <input
+          type="file"
+          name="photo"
+          accept="image/*"
+          onChange={handleFileChange}
+          required
+        />
 
         <label>Upload Signature</label>
-        <input type="file" name="signature" accept="image/*" onChange={handleFileChange} required />
+        <input
+          type="file"
+          name="signature"
+          accept="image/*"
+          onChange={handleFileChange}
+          required
+        />
 
         <button type="submit">Submit Admission</button>
       </form>

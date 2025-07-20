@@ -3,7 +3,6 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/AdmissionDetail.css";
 
-
 function AdmissionDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -13,7 +12,9 @@ function AdmissionDetail() {
   useEffect(() => {
     const fetchAdmission = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/admissions/${id}`);
+        const res = await axios.get(
+          `http://localhost:5000/api/admissions/${id}`
+        );
         setAdmission(res.data);
       } catch (err) {
         console.error("Error loading admission:", err);
@@ -31,21 +32,44 @@ function AdmissionDetail() {
   return (
     <div className="detail-page">
       <h2>Admission Form - {admission.fullName}</h2>
-      <p><strong>Email:</strong> {admission.email}</p>
-      <p><strong>Father's Name:</strong> {admission.fatherName}</p>
-      <p><strong>Mother's Name:</strong> {admission.motherName}</p>
-      <p><strong>Phone:</strong> {admission.phone}</p>
-      <p><strong>DOB:</strong> {admission.dob}</p>
-      <p><strong>Gender:</strong> {admission.gender}</p>
-      <p><strong>Category:</strong> {admission.category}</p>
-      <p><strong>Address:</strong> {admission.address}</p>
-      <p><strong>Qualification:</strong> {admission.qualification}</p>
-      <p><strong>Course:</strong> {admission.course}</p>
-      <p><strong>Enrollment No:</strong> {admission.enrollmentNo}</p>
+      <p>
+        <strong>Email:</strong> {admission.email}
+      </p>
+      <p>
+        <strong>Father's Name:</strong> {admission.fatherName}
+      </p>
+      <p>
+        <strong>Mother's Name:</strong> {admission.motherName}
+      </p>
+      <p>
+        <strong>Phone:</strong> {admission.phone}
+      </p>
+      <p>
+        <strong>DOB:</strong> {admission.dob?.split("T")[0]}
+      </p>
+      <p>
+        <strong>Gender:</strong> {admission.gender}
+      </p>
+      <p>
+        <strong>Category:</strong> {admission.category}
+      </p>
+      <p>
+        <strong>Address:</strong> {admission.address}
+      </p>
+      <p>
+        <strong>Qualification:</strong> {admission.qualification}
+      </p>
+      <p>
+        <strong>Course:</strong> {admission.course}
+      </p>
+      <p>
+        <strong>Enrollment No:</strong> {admission.enrollmentNo}
+      </p>
 
       {admission.photo && (
         <p>
-          <strong>Photo:</strong><br />
+          <strong>Photo:</strong>
+          <br />
           <img
             src={`http://localhost:5000/uploads/${admission.photo}`}
             width="150"
@@ -56,7 +80,8 @@ function AdmissionDetail() {
       )}
       {admission.signature && (
         <p>
-          <strong>Signature:</strong><br />
+          <strong>Signature:</strong>
+          <br />
           <img
             src={`http://localhost:5000/uploads/${admission.signature}`}
             width="150"

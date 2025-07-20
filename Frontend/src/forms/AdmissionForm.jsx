@@ -42,7 +42,7 @@ const AdmissionForm = () => {
     Object.entries(formData).forEach(([key, value]) => {
       data.append(key, value);
     });
-    data.append("photo", image);        // ✅ Must match backend
+    data.append("photo", image);
     data.append("signature", signature);
 
     try {
@@ -77,12 +77,39 @@ const AdmissionForm = () => {
     <div className="admission-form-container">
       <h2>Admission Form</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <input type="text" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name" required />
-        <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder="Email" required />
-        <input type="tel" name="phone" value={formData.phone} onChange={handleChange} placeholder="Phone" required />
-        
-        <input type="date" name="dob" value={formData.dob} onChange={handleChange} required />
-        
+        <input
+          type="text"
+          name="fullName"
+          value={formData.fullName}
+          onChange={handleChange}
+          placeholder="Full Name"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="tel"
+          name="phone"
+          value={formData.phone}
+          onChange={handleChange}
+          placeholder="Phone"
+          required
+        />
+
+        <input
+          type="date"
+          name="dob"
+          value={formData.dob ? formData.dob.split("T")[0] : ""}
+          onChange={handleChange}
+          required
+        />
+
         <select name="gender" value={formData.gender} onChange={handleChange} required>
           <option value="">Select Gender</option>
           <option value="Male">Male</option>
@@ -98,18 +125,63 @@ const AdmissionForm = () => {
           <option value="ST">ST</option>
         </select>
 
-        <input type="text" name="fatherName" value={formData.fatherName} onChange={handleChange} placeholder="Father's Name" required />
-        <input type="text" name="motherName" value={formData.motherName} onChange={handleChange} placeholder="Mother's Name" required />
-
-        <input type="text" name="course" value={formData.course} onChange={handleChange} placeholder="Course Applying For" required />
-        <textarea name="address" value={formData.address} onChange={handleChange} placeholder="Address" required />
-        <input type="text" name="qualification" value={formData.qualification} onChange={handleChange} placeholder="Highest Qualification" required />
+        <input
+          type="text"
+          name="fatherName"
+          value={formData.fatherName}
+          onChange={handleChange}
+          placeholder="Father's Name"
+          required
+        />
+        <input
+          type="text"
+          name="motherName"
+          value={formData.motherName}
+          onChange={handleChange}
+          placeholder="Mother's Name"
+          required
+        />
+        <input
+          type="text"
+          name="course"
+          value={formData.course}
+          onChange={handleChange}
+          placeholder="Course Applying For"
+          required
+        />
+        <textarea
+          name="address"
+          value={formData.address}
+          onChange={handleChange}
+          placeholder="Address"
+          required
+        />
+        <input
+          type="text"
+          name="qualification"
+          value={formData.qualification}
+          onChange={handleChange}
+          placeholder="Highest Qualification"
+          required
+        />
 
         <label>Upload Photo:</label>
-        <input type="file" name="photo" onChange={handleFileChange} accept="image/*" required />
+        <input
+          type="file"
+          name="photo"
+          onChange={handleFileChange}
+          accept="image/*"
+          required
+        />
 
         <label>Upload Signature:</label>
-        <input type="file" name="signature" onChange={handleFileChange} accept="image/*" required />
+        <input
+          type="file"
+          name="signature"
+          onChange={handleFileChange}
+          accept="image/*"
+          required
+        />
 
         <button type="submit">Submit</button>
       </form>

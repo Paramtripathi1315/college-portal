@@ -142,6 +142,27 @@
   }
 }
 
+.details-box table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.details-box td {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+}
+.details-box table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+.details-box table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+
+
+
 /* Simple fade in animation */
 @keyframes fadeIn {
   from {

@@ -1,9 +1,8 @@
 // src/pages/AdminDashboard.jsx
 import { useEffect, useState } from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/AdminDashboard.css";
-
 
 function AdminDashboard() {
   const navigate = useNavigate();
@@ -46,11 +45,19 @@ function AdminDashboard() {
 
     const fetchForms = async () => {
       try {
-        const admissionRes = await axios.get("http://localhost:5000/api/admissions");
-        const grievanceRes = await axios.get("http://localhost:5000/api/grievances");
+        const admissionRes = await axios.get(
+          "http://localhost:5000/api/admissions"
+        );
+        const grievanceRes = await axios.get(
+          "http://localhost:5000/api/grievances"
+        );
 
-        setAdmissions(Array.isArray(admissionRes.data) ? admissionRes.data : []);
-        setGrievances(Array.isArray(grievanceRes.data) ? grievanceRes.data : []);
+        setAdmissions(
+          Array.isArray(admissionRes.data) ? admissionRes.data : []
+        );
+        setGrievances(
+          Array.isArray(grievanceRes.data) ? grievanceRes.data : []
+        );
       } catch (error) {
         console.error("Error fetching form data:", error);
         setAdmissions([]);
@@ -60,7 +67,7 @@ function AdminDashboard() {
 
     fetchUser();
   }, [navigate]);
-console.log("Grievances:", grievances);
+  console.log("Grievances:", grievances);
 
   if (loading) return <div>Loading admin dashboard...</div>;
 
@@ -84,44 +91,101 @@ console.log("Grievances:", grievances);
           </ul>
         )}
 
-
         {selectedAdmission && (
           <div className="details-box">
             <h4>📌 Admission Details</h4>
-            <p><strong>Full Name:</strong> {selectedAdmission.fullName}</p>
-            <p><strong>Enrollment No:</strong> {selectedAdmission.enrollmentNo}</p>
-            <p><strong>Email:</strong> {selectedAdmission.email}</p>
-            <p><strong>Phone:</strong> {selectedAdmission.phone}</p>
-            <p><strong>DOB:</strong> {selectedAdmission.dob}</p>
-            <p><strong>Course:</strong> {selectedAdmission.course}</p>
-            <p><strong>Qualification:</strong> {selectedAdmission.qualification}</p>
-            <p><strong>Address:</strong> {selectedAdmission.address}</p>
-
-            {selectedAdmission.photo && (
-              <p>
-                <strong>Photo:</strong>{" "}
-                <img
-                  src={`http://localhost:5000/uploads/${selectedAdmission.photo}`}
-                  width="100"
-                  alt={`${selectedAdmission.fullName}`}
-                  onError={(e) => (e.target.style.display = "none")}
-                />
-              </p>
-            )}
-
-            {selectedAdmission.signature && (
-              <p>
-                <strong>Signature:</strong>{" "}
-                <img
-                  src={`http://localhost:5000/uploads/${selectedAdmission.signature}`}
-                  width="100"
-                  alt={`${selectedAdmission.fullName}'s signature`}
-                  onError={(e) => (e.target.style.display = "none")}
-                />
-              </p>
-            )}
-
-            <button onClick={() => setSelectedAdmission(null)}>Close</button>
+            <table
+              border="1"
+              cellPadding="10"
+              style={{ borderCollapse: "collapse", width: "100%" }}
+            >
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Full Name</strong>
+                  </td>
+                  <td>{selectedAdmission.fullName}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Enrollment No</strong>
+                  </td>
+                  <td>{selectedAdmission.enrollmentNo}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Email</strong>
+                  </td>
+                  <td>{selectedAdmission.email}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Phone</strong>
+                  </td>
+                  <td>{selectedAdmission.phone}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>DOB</strong>
+                  </td>
+                  <td>{selectedAdmission.dob}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Course</strong>
+                  </td>
+                  <td>{selectedAdmission.course}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Qualification</strong>
+                  </td>
+                  <td>{selectedAdmission.qualification}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Address</strong>
+                  </td>
+                  <td>{selectedAdmission.address}</td>
+                </tr>
+                {selectedAdmission.photo && (
+                  <tr>
+                    <td>
+                      <strong>Photo</strong>
+                    </td>
+                    <td>
+                      <img
+                        src={`http://localhost:5000/uploads/${selectedAdmission.photo}`}
+                        width="100"
+                        alt={`${selectedAdmission.fullName}`}
+                        onError={(e) => (e.target.style.display = "none")}
+                      />
+                    </td>
+                  </tr>
+                )}
+                {selectedAdmission.signature && (
+                  <tr>
+                    <td>
+                      <strong>Signature</strong>
+                    </td>
+                    <td>
+                      <img
+                        src={`http://localhost:5000/uploads/${selectedAdmission.signature}`}
+                        width="100"
+                        alt={`${selectedAdmission.fullName}'s signature`}
+                        onError={(e) => (e.target.style.display = "none")}
+                      />
+                    </td>
+                  </tr>
+                )}
+              </tbody>
+            </table>
+            <button
+              onClick={() => setSelectedAdmission(null)}
+              style={{ marginTop: "1rem" }}
+            >
+              Close
+            </button>
           </div>
         )}
       </div>
@@ -144,13 +208,47 @@ console.log("Grievances:", grievances);
         {selectedGrievance && (
           <div className="details-box">
             <h4>📌 Grievance Details</h4>
-            <p><strong>Name:</strong> {selectedGrievance.name}</p>
-            <p><strong>Email:</strong> {selectedGrievance.email}</p>
-            <p><strong>Course:</strong> {selectedGrievance.course}</p>
-            <p><strong>Enrollment:</strong> {selectedGrievance.enrollment}</p>
-            <p><strong>Message:</strong> {selectedGrievance.message}</p>
+            <table style={{ width: "100%", borderCollapse: "collapse" }}>
+              <tbody>
+                <tr>
+                  <td>
+                    <strong>Name</strong>
+                  </td>
+                  <td>{selectedGrievance.name}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Email</strong>
+                  </td>
+                  <td>{selectedGrievance.email}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Course</strong>
+                  </td>
+                  <td>{selectedGrievance.course}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Enrollment</strong>
+                  </td>
+                  <td>{selectedGrievance.enrollment}</td>
+                </tr>
+                <tr>
+                  <td>
+                    <strong>Message</strong>
+                  </td>
+                  <td>{selectedGrievance.message}</td>
+                </tr>
+              </tbody>
+            </table>
 
-            <button onClick={() => setSelectedGrievance(null)}>Close</button>
+            <button
+              onClick={() => setSelectedGrievance(null)}
+              style={{ marginTop: "10px" }}
+            >
+              Close
+            </button>
           </div>
         )}
       </div>
