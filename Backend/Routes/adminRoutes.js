@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
+const { verifyToken, requireAdmin } = require('../Middleware/authMiddleware');
 
 // @desc    Admin Dashboard
 // @route   GET /api/admin/dashboard
