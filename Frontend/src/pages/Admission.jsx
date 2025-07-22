@@ -152,11 +152,9 @@ function Admission() {
           required
         >
           <option value="">Select</option>
-          <option value="10th">10th</option>
           <option value="12th">12th</option>
           <option value="Diploma">Diploma</option>
           <option value="Graduation">Graduation</option>
-          <option value="Post Graduation">Post Graduation</option>
         </select>
 
         <label>Course Applying For</label>
@@ -166,18 +164,27 @@ function Admission() {
           onChange={handleChange}
           required
         >
-          <option value="">-- Select Course --</option>
-          <option value="BCA">BCA</option>
-          <option value="MCA">MCA</option>
-          <option value="BBA">BBA</option>
-          <option value="MBA">MBA</option>
-          <option value="B.Com">B.Com</option>
-          <option value="M.Com">M.Com</option>
-          <option value="B.Sc. CS">B.Sc. CS</option>
-          <option value="M.Sc. CS">M.Sc. CS</option>
-          <option value="B.A.">B.A.</option>
-          <option value="M.A.">M.A.</option>
-          <option value="B.Ed.">B.Ed.</option>
+              <option value="BCA">BCA</option>
+              <option value="MCA">MCA</option>
+              <option value="BBA">BBA</option>
+              <option value="MBA">MBA</option>
+              <option value="B.Com">B.Com</option>
+              <option value="M.Com">M.Com</option>
+              <option value="B.Sc. CS">B.Sc. CS</option>
+              <option value="M.Sc. CS">M.Sc. CS</option>
+              <option value="B.Sc. IT">B.Sc. IT</option>
+              <option value="M.Sc. IT">M.Sc. IT</option>
+              <option value="B.Sc. Mathematics">B.Sc. Mathematics</option>
+              <option value="M.Sc. Mathematics">M.Sc. Mathematics</option>
+              <option value="B.Sc. Physics">B.Sc. Physics</option>
+              <option value="M.Sc. Physics">M.Sc. Physics</option>
+              <option value="B.Sc. Chemistry">B.Sc. Chemistry</option>
+              <option value="M.Sc. Chemistry">M.Sc. Chemistry</option>
+              <option value="B.Sc. Biology">B.Sc. Biology</option>
+              <option value="M.Sc. Biology">M.Sc. Biology</option>
+              <option value="B.A.">B.A.</option>
+              <option value="M.A.">M.A.</option>
+              <option value="B.Ed.">B.Ed.</option>
         </select>
 
         <label>Address</label>
