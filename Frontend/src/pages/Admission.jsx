@@ -1,8 +1,8 @@
 import "../styles/Admission.css";
+import React, { useState } from "react";
 import axios from "axios";
-import { useState } from "react";
 
-function Admission() {
+const Admission = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -15,50 +15,72 @@ function Admission() {
     motherName: "",
     address: "",
     qualification: "",
-    photo: "",
-    signature: "",
-    enrollmentNo: "",
+    photo: null,
+    signature: null,
   });
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
   };
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setFormData({ ...formData, [e.target.name]: reader.result });
-    };
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    const { name, files } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: files[0],
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
+      const form = new FormData();
+      for (let key in formData) {
+        form.append(key, formData[key]);
+      }
+
       const response = await axios.post(
         "http://localhost:5000/api/admissions",
-        formData
+        form,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
+
       alert(
         `Admission Successful! Enrollment No: ${response.data.enrollmentNo}`
       );
+
+      // Reset form
       setFormData({
         fullName: "",
         email: "",
         phone: "",
         course: "",
         dob: "",
+        gender: "",
+        category: "",
+        fatherName: "",
+        motherName: "",
         address: "",
         qualification: "",
+        photo: null,
+        signature: null,
       });
+      document.getElementById("admissionForm").reset();
     } catch (err) {
-      alert(err.response?.data?.message || "Submission failed");
+      console.error(err);
+      alert("Admission failed. Please try again.");
     }
   };
-
+  
   return (
     <div className="admission">
       <h1>Admission Form</h1>
