@@ -1,10 +1,11 @@
 // backend/server.js
-const express = require('express');
-const mongoose = require('mongoose');
-const cors = require('cors');
-const dotenv = require('dotenv');
-const path = require('path');
-const __dirname = path.resolve();
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
@@ -17,11 +18,10 @@ if (process.env.NODE_ENV === "production") {
 // Load environment variables
 dotenv.config();
 
-// Route imports
-const authRoutes = require('./Routes/authRoutes');
-const admissionRoutes = require('./Routes/admissionRoutes');
-const adminRoutes = require('./Routes/adminRoutes');
-const grievanceRoutes = require('./Routes/grievanceRoutes');
+import authRoutes from './Routes/authRoutes.js';
+import admissionRoutes from './Routes/admissionRoutes.js';
+import adminRoutes from './Routes/adminRoutes.js';
+import grievanceRoutes from './Routes/grievanceRoutes.js';
 
 
 // Initialize Express app
