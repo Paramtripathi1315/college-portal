@@ -202,7 +202,7 @@ function Admission() {
           name="photo"
           accept="image/*"
           onChange={handleFileChange}
-          required
+          
         />
 
         <label>Upload Signature</label>
@@ -211,7 +211,7 @@ function Admission() {
           name="signature"
           accept="image/*"
           onChange={handleFileChange}
-          required
+          
         />
 
         <button type="submit">Submit Admission</button>

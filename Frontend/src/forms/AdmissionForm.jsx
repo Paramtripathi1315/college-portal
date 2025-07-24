@@ -171,7 +171,7 @@ const AdmissionForm = () => {
           name="photo"
           onChange={handleFileChange}
           accept="image/*"
-          required
+          
         />
 
         <label>Upload Signature:</label>
@@ -180,7 +180,7 @@ const AdmissionForm = () => {
           name="signature"
           onChange={handleFileChange}
           accept="image/*"
-          required
+          
         />
 
         <button type="submit">Submit</button>
